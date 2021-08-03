@@ -1,0 +1,16 @@
+id: productDetail
+name: Product Detail Page
+icon: coffee
+parameters: []
+slots:
+  - id: content
+    name: Content
+    allowedComponents:
+      - productDetailInfo
+      - $test
+      - $personalization
+    inheritAllowedComponents: false
+titleParameter: ''
+canBeComposition: true
+created: '2021-08-03T02:20:17.965799+00:00'
+updated: '2021-08-03T02:35:43.242843+00:00'

@@ -1,0 +1,25 @@
+composition:
+  _id: ffd2d88d-da61-4019-9f00-67d7dfeae49c
+  type: home
+  _name: Home
+  _slug: /home
+  slots:
+    content:
+      - type: productCategories
+        parameters:
+          productCategoryName:
+            type: text
+            value: Lamps
+          productCategoryCount:
+            type: text
+            value: '3'
+      - type: productCategories
+        parameters:
+          productCategoryName:
+            type: text
+            value: Armchairs
+          productCategoryCount:
+            type: text
+            value: '3'
+  parameters: {}
+state: 0

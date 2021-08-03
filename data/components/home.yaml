@@ -1,0 +1,17 @@
+id: home
+name: Home
+icon: home-alt
+parameters: []
+slots:
+  - id: content
+    name: Content
+    allowedComponents:
+      - productDetail
+      - productCategories
+      - $personalization
+      - $test
+    inheritAllowedComponents: false
+titleParameter: ''
+canBeComposition: true
+created: '2021-08-03T02:22:22.614228+00:00'
+updated: '2021-08-03T02:22:29.405045+00:00'
