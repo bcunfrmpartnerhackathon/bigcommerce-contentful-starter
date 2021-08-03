@@ -1,0 +1,14 @@
+composition:
+  _id: bc50714c-6d8b-4106-8707-171d12353e09
+  type: productDetail
+  _name: Product Detail Pages
+  _slug: /product-detail
+  slots:
+    content:
+      - type: productDetailInfo
+        parameters:
+          product:
+            type: bigcommerceProduct
+            value: '80'
+  parameters: {}
+state: 0
