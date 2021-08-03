@@ -10,6 +10,7 @@ import { ProductDetailInfo } from '@/components/detail/ProductDetailInfo';
 import { Visualizer } from '@/components/Visualizer';
 import { ProductRecommendedProducts } from '@/components/detail/ProductRecommendedProducts';
 import { bigCommerceClient } from '@/lib/enhancers/bigCommerceEnhancer';
+import { UpmClientError } from '@uniformdev/upm';
 
 function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
   switch (component.type) {
@@ -51,10 +52,22 @@ const ProductDetail = ({ layout }: { preview?: string; layout: RootComponentInst
 
 export default ProductDetail;
 
+const sluggify = (text: string) => {
+  return text.toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+}
+
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { brands } = await bigCommerceClient.getBrands();
   const { products } = await bigCommerceClient.getProducts({});
 
-  const paths = products.map(product => `/products/brand-name/${product.id}`);
+  const paths = products.map(product => {
+    const brand = brands?.find(brand => brand.id === product.brand_id);
+    const brandName = brand ? brand.name : 'unknown';
+    const brandSlug = sluggify(brandName);
+    return `/products/${brandSlug}/${product.id}`;
+  });
 
   return {
     paths,
@@ -69,12 +82,24 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   const { preview } = context;
 
-  // fetch the layout from the UPM enhancer proxy
-  const apiResult = await upmClient.getCompositionBySlug({
-    slug: `/product-detail`,
-    state: true ? 'preview' : 'published',
-    skipEnhance: false,
-  });
+  const [productResult, genericResult] = await Promise.all([
+    upmClient.getCompositionBySlug({
+      slug: `/products/${productId}`,
+      state: true ? 'preview' : 'published',
+      skipEnhance: false,
+    }).catch(compositionExceptionHandler),
+    upmClient.getCompositionBySlug({
+      slug: `/product-detail`,
+      state: true ? 'preview' : 'published',
+      skipEnhance: false,
+    }).catch(compositionExceptionHandler)
+  ]);
+
+  const apiResult = productResult ?? genericResult;
+
+  if (!apiResult) {
+    throw new Error("Composition not found.");
+  }
 
   const enhancers = buildProductDetailEnhancers({ productId: productId as string })
 
@@ -91,4 +116,12 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       preview: preview ? '4553de09-49ff-49a1-806e-754f37357359' : null,
     },
   };
+}
+
+const compositionExceptionHandler = (e: { statusCode: number | undefined }) => {
+  if (e.statusCode === 404) {
+    return null;
+  }
+
+  throw e;
 }
