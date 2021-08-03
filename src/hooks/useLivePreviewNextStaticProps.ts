@@ -1,0 +1,19 @@
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
+import { useCompositionEventEffect, UseCompositionEventEffectOptions } from '@uniformdev/upm-react';
+
+type UseLivePreviewNextStaticPropsOptions = Omit<UseCompositionEventEffectOptions, 'effect' | 'enabled'>;
+
+export function useLivePreviewNextStaticProps(options: UseLivePreviewNextStaticPropsOptions) {
+  const router = useRouter();
+
+  const effect = useCallback(() => {
+    router.replace(router.asPath, undefined, { scroll: false });
+  }, [router]);
+
+  return useCompositionEventEffect({
+    ...options,
+    enabled: router.isPreview,
+    effect,
+  });
+}
