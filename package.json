@@ -12,6 +12,7 @@
     "ci:build": "npm run generate && next build && next export",
     "generate": "uniform optimize manifest download --output ./src/lib/intentManifest.json --apiKey $UNIFORM_API_KEY",
     "start": "next start",
+    "dev": "run-s generate dev:next",
     "build:worker": "wrangler build",
     "dev:worker": "wrangler dev",
     "pull": "run-p pull:components pull:compositions",
@@ -35,9 +36,12 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@uniformdev/cli": "9.0.2-alpha.31",
     "@types/react": "^17.0.15",
+    "@uniformdev/cli": "9.0.2-alpha.31",
+    "autoprefixer": "^10.3.1",
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.7",
     "typescript": "^4.3.5"
   }
 }
