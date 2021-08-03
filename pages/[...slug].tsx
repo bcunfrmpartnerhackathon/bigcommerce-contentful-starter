@@ -11,9 +11,12 @@ import { ProductDetail } from 'components/ProductDetail';
 import { ProductCategories } from 'components/ProductCategories';
 import { enhancers } from '@/lib/enhancers';
 import { enhance } from '@uniformdev/upm';
+import { Hero } from '@/components/Hero';
 
 function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
   switch (component.type) {
+    case 'hero':
+      return Hero;
     case 'productCategories':
       return ProductCategories;
     case 'productDetail':
@@ -67,8 +70,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     .filter((slug) => slug)
     .map((s) => (s.startsWith('/') ? `${s}` : `/${s}`));
 
-  console.log({ paths });
-
   return {
     paths,
     fallback: false,
@@ -89,11 +90,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     skipEnhance: false,
   });
 
-  console.log({enhancers});
-
   await enhance({ composition: apiResult.composition, enhancers, preview });
-
-  console.log(JSON.stringify(apiResult.composition));
 
   return {
     props: {
