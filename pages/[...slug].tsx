@@ -6,9 +6,11 @@ import { PreviewSwitch } from 'components/PreviewSwitch';
 import { useLivePreviewNextStaticProps } from 'src/hooks/useLivePreviewNextStaticProps';
 import { Visualizer } from 'components/Visualizer';
 import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';
-import { upmClient } from '../src/lib/upmClient';
+import { upmClient } from '@/lib/upmClient';
 import { ProductDetail } from 'components/ProductDetail';
 import { ProductCategories } from 'components/ProductCategories';
+import { enhancers } from '@/lib/enhancers';
+import { enhance } from '@uniformdev/upm';
 
 function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
   switch (component.type) {
@@ -74,7 +76,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const slug = context?.params?.slug ?? '';
 
   const slugString = Array.isArray(slug) ? slug.join('/') : slug;
-  console.log({ slugString });
 
   const { preview } = context;
 
@@ -82,7 +83,14 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const apiResult = await upmClient.getCompositionBySlug({
     slug: `/${slugString}`,
     state: preview ? 'preview' : 'published',
+    skipEnhance: false,
   });
+
+  console.log({enhancers});
+
+  await enhance({ composition: apiResult.composition, enhancers, preview });
+
+  console.log(JSON.stringify(apiResult.composition));
 
   return {
     props: {
