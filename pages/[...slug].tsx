@@ -35,8 +35,11 @@ export default function Home({ preview, layout }: { preview?: string; layout: Ro
     projectId: preview,
   });
 
+  // @ts-ignore
   return (
     <div>
+      <ProductDetail  />
+
       <Composition<PageProps> data={layout} resolveRenderer={resolveRendering}>
         {({ entry }) => (
           <main>
