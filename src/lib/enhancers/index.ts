@@ -1,5 +1,6 @@
 import { compose, EnhancerBuilder } from '@uniformdev/upm';
-import { UPM_CONTENTFUL_PARAMETER_TYPES, UPM_BIGCOMMERCE_PARAMETER_TYPES } from '@uniformdev/upm-contentful';
+import { UPM_CONTENTFUL_PARAMETER_TYPES } from '@uniformdev/upm-contentful';
+import { UPM_BIGCOMMERCE_PARAMETER_TYPES } from '@uniformdev/upm-bigcommerce';
 import { contentfulEnhancer } from './contentfulEnhancer';
 import { bigCommerceEnhancer } from './bigCommerceEnhancer';
 
@@ -14,4 +15,4 @@ const sysFieldCleanser = ({ parameter }) => {
 
 export const enhancers = new EnhancerBuilder()
   .parameterType(UPM_CONTENTFUL_PARAMETER_TYPES, compose(contentfulEnhancer(), sysFieldCleanser))
-  .parameterType(UPM_BIGCOMMERCE_PARAMETER_TYPES, bigCommerceEnhancer())
+  .parameterType(UPM_BIGCOMMERCE_PARAMETER_TYPES, bigCommerceEnhancer());
