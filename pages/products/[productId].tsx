@@ -49,13 +49,6 @@ const ProductDetail = ({ layout }: { preview?: string; layout: RootComponentInst
 
 export default ProductDetail;
 
-const sluggify = (text: string) => {
-  return text
-    .toLowerCase()
-    .replace(/ /g, '-')
-    .replace(/[^\w-]+/g, '');
-};
-
 export const getStaticPaths: GetStaticPaths = async () => {
   const { products } = await bigCommerceClient.getProducts({});
 
