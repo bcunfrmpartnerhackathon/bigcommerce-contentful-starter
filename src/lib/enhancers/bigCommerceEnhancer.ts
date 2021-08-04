@@ -1,15 +1,21 @@
 import getConfig from 'next/config';
-import { createBigCommerceClient, createBigCommerceEnhancer } from '@uniformdev/upm-bigcommerce';
+import { BigCommerceClient, createBigCommerceClient, createBigCommerceEnhancer } from '@uniformdev/upm-bigcommerce';
 
 const { serverRuntimeConfig } = getConfig();
 const { bigCommerceStoreHash, bigCommerceToken } = serverRuntimeConfig;
 
+export const bigCommerceClient: BigCommerceClient = createBigCommerceClient({
+  storeHash: bigCommerceStoreHash,
+  token: bigCommerceToken,
+})
+
+export type BigCommerceEnhancerOptions = {
+  productId?: string
+}
+
 export const bigCommerceEnhancer = () =>
   createBigCommerceEnhancer({
-    client: createBigCommerceClient({
-      storeHash: bigCommerceStoreHash,
-      token: bigCommerceToken,
-    }),
+    client: bigCommerceClient,
     createProductOptions: () => {
       return {
         include_fields: ['id', 'name', 'price', 'description'],

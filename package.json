@@ -23,12 +23,13 @@
     "push:compositions": "uniform presentation composition push ./upm/compositions"
   },
   "dependencies": {
-    "@uniformdev/optimize-edge-cloudflare": "9.0.2-alpha.31",
-    "@uniformdev/optimize-tracker-common": "9.0.2-alpha.31",
-    "@uniformdev/optimize-tracker-react": "9.0.2-alpha.31",
-    "@uniformdev/upm-bigcommerce": "9.0.2-alpha.31",
-    "@uniformdev/upm-contentful": "9.0.2-alpha.31",
-    "@uniformdev/upm-react": "9.0.2-alpha.31",
+    "@contentful/rich-text-html-renderer": "^15.1.0",
+    "@uniformdev/optimize-edge-cloudflare": "9.0.2-alpha.32",
+    "@uniformdev/optimize-tracker-common": "9.0.2-alpha.32",
+    "@uniformdev/optimize-tracker-react": "9.0.2-alpha.32",
+    "@uniformdev/upm-bigcommerce": "9.0.2-alpha.32",
+    "@uniformdev/upm-contentful": "9.0.2-alpha.32",
+    "@uniformdev/upm-react": "9.0.2-alpha.32",
     "contentful": "^8.4.2",
     "next": "11.0.1",
     "nookies": "^2.5.2",
@@ -37,7 +38,7 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.15",
-    "@uniformdev/cli": "9.0.2-alpha.31",
+    "@uniformdev/cli": "9.0.2-alpha.32",
     "autoprefixer": "^10.3.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.3.6",
