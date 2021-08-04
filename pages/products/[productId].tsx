@@ -24,9 +24,7 @@ function resolveRendering(component: ComponentInstance): ComponentType<Component
   }
 }
 
-type ProductDetailProps = {
-
-}
+type ProductDetailProps = {};
 
 type ProductDetailSlots = 'content' | 'bottomRow';
 
@@ -46,26 +44,23 @@ const ProductDetail = ({ layout }: { preview?: string; layout: RootComponentInst
         )}
       </Composition>
     </div>
-  )
-}
+  );
+};
 
 export default ProductDetail;
 
 const sluggify = (text: string) => {
-  return text.toLowerCase()
+  return text
+    .toLowerCase()
     .replace(/ /g, '-')
     .replace(/[^\w-]+/g, '');
-}
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { brands } = await bigCommerceClient.getBrands();
   const { products } = await bigCommerceClient.getProducts({});
 
-  const paths = products.map(product => {
-    const brand = brands?.find(brand => brand.id === product.brand_id);
-    const brandName = brand ? brand.name : 'unknown';
-    const brandSlug = sluggify(brandName);
-    return `/products/${brandSlug}/${product.id}`;
+  const paths = products.map((product) => {
+    return `/products/${product.id}`;
   });
 
   return {
@@ -75,32 +70,34 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const {
-    productId
-  } = context?.params || {};
+  const { productId } = context?.params || {};
 
   const { preview } = context;
 
   const [productResult, genericResult] = await Promise.all([
-    upmClient.getCompositionBySlug({
-      slug: `/products/${productId}`,
-      state: true ? 'preview' : 'published',
-      skipEnhance: false,
-    }).catch(compositionExceptionHandler),
-    upmClient.getCompositionBySlug({
-      slug: `/product-detail`,
-      state: true ? 'preview' : 'published',
-      skipEnhance: false,
-    }).catch(compositionExceptionHandler)
+    upmClient
+      .getCompositionBySlug({
+        slug: `/products/${productId}`,
+        state: true ? 'preview' : 'published',
+        skipEnhance: false,
+      })
+      .catch(compositionExceptionHandler),
+    upmClient
+      .getCompositionBySlug({
+        slug: `/product-detail`,
+        state: true ? 'preview' : 'published',
+        skipEnhance: false,
+      })
+      .catch(compositionExceptionHandler),
   ]);
 
   const apiResult = productResult ?? genericResult;
 
   if (!apiResult) {
-    throw new Error("Composition not found.");
+    throw new Error('Composition not found.');
   }
 
-  const enhancers = buildProductDetailEnhancers({ productId: productId as string })
+  const enhancers = buildProductDetailEnhancers({ productId: productId as string });
 
   await enhance({ composition: apiResult.composition, enhancers, context: { preview } });
 
@@ -111,7 +108,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       preview: preview ? '4553de09-49ff-49a1-806e-754f37357359' : null,
     },
   };
-}
+};
 
 const compositionExceptionHandler = (e: { statusCode: number | undefined }) => {
   if (e.statusCode === 404) {
@@ -119,4 +116,4 @@ const compositionExceptionHandler = (e: { statusCode: number | undefined }) => {
   }
 
   throw e;
-}
+};
