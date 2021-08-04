@@ -10,7 +10,6 @@ import { ProductDetailInfo } from '@/components/detail/ProductDetailInfo';
 import { Visualizer } from '@/components/Visualizer';
 import { ProductRecommendedProducts } from '@/components/detail/ProductRecommendedProducts';
 import { bigCommerceClient } from '@/lib/enhancers/bigCommerceEnhancer';
-import { UpmClientError } from '@uniformdev/upm';
 
 function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
   switch (component.type) {
@@ -103,11 +102,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
   const enhancers = buildProductDetailEnhancers({ productId: productId as string })
 
-  await enhance({
-    composition: apiResult.composition,
-    enhancers,
-    preview
-  });
+  await enhance({ composition: apiResult.composition, enhancers, context: { preview } });
 
   return {
     props: {

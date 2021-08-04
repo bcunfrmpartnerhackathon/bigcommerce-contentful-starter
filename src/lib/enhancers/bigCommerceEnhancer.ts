@@ -13,7 +13,7 @@ export type BigCommerceEnhancerOptions = {
   productId?: string
 }
 
-export const bigCommerceEnhancer = (options?: BigCommerceEnhancerOptions) =>
+export const bigCommerceEnhancer = () =>
   createBigCommerceEnhancer({
     client: bigCommerceClient,
     createProductOptions: () => {

@@ -90,7 +90,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     skipEnhance: false,
   });
 
-  await enhance({ composition: apiResult.composition, enhancers, preview });
+  await enhance({ composition: apiResult.composition, enhancers, context: { preview } });
 
   return {
     props: {

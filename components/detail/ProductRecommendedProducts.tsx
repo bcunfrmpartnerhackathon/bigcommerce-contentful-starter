@@ -1,11 +1,21 @@
 import { ProductResult } from "@uniformdev/upm-bigcommerce"
 
 export const ProductRecommendedProducts = ({
-  product
+  product,
+  productQuery
 }: {
-  product: ProductResult | undefined
+  product: ProductResult | undefined,
+  productQuery: ProductResult[]
 }) => {
   return (
-    <div>Recommended Products: {product?.name}</div>
+    <div>
+      <h1>Recommended Products: {product?.name}</h1>
+      <div>Recommended</div>
+      <ul>
+        {productQuery.map(product => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </div>
   )
 }
