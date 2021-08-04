@@ -3,8 +3,8 @@ import { ComponentProps } from '@uniformdev/upm-react';
 export function ProductCategories({ component, ...otherProps }: ComponentProps) {
   return (
     <>
-      <h1>Product Categories component</h1>
-      <fieldset>
+      {/* <h1>Product Categories component</h1> */}
+      {/* <fieldset>
         <legend>Component parameters</legend>
         <p>
           <strong>Props</strong>
@@ -16,7 +16,7 @@ export function ProductCategories({ component, ...otherProps }: ComponentProps) 
             </li>
           ))}
         </ul>
-      </fieldset>
+      </fieldset> */}
     </>
   );
 }

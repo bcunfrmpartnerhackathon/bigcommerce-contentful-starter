@@ -1,18 +1,21 @@
 import React, { ComponentProps, ComponentType } from 'react';
 import { GetStaticPaths, GetStaticPropsContext } from 'next';
-import { upmClient } from '@/lib/upmClient';
-import { buildProductDetailEnhancers } from '@/lib/enhancers';
+import { upmClient } from '@lib/upmClient';
+import { buildProductDetailEnhancers } from '@lib/enhancers';
 import { enhance } from '@uniformdev/upm';
 import { Composition, Slot } from '@uniformdev/upm-react';
 import { ComponentInstance, RootComponentInstance } from '@uniformdev/upm';
-import { ProductImageGallery } from '@/components/detail/ProductImageGallery';
-import { ProductDetailInfo } from '@/components/detail/ProductDetailInfo';
-import { Visualizer } from '@/components/Visualizer';
-import { ProductRecommendedProducts } from '@/components/detail/ProductRecommendedProducts';
-import { bigCommerceClient } from '@/lib/enhancers/bigCommerceEnhancer';
+import { ProductImageGallery } from '@components/detail/ProductImageGallery';
+import { ProductDetailInfo } from '@components/detail/ProductDetailInfo';
+import { Visualizer } from '@components/Visualizer';
+import { ProductRecommendedProducts } from '@components/detail/ProductRecommendedProducts';
+import { bigCommerceClient } from '@lib/enhancers/bigCommerceEnhancer';
+import { FeaturedProducts } from '@components/FeaturedProducts';
 
 function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
   switch (component.type) {
+    case 'featuredProducts':
+      return FeaturedProducts;
     case 'productImageGallery':
       return ProductImageGallery;
     case 'productDetailInfo':

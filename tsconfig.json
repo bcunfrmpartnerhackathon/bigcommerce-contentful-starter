@@ -8,8 +8,9 @@
       "esnext"
     ],
     "paths": {
-      "@/lib/*": ["src/lib/*"],
-      "@/components/*": ["components/*"]
+      "@lib/*": ["src/lib/*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
     },
     "allowJs": true,
     "skipLibCheck": true,
