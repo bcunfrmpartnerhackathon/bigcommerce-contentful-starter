@@ -13,9 +13,6 @@ import { useSiteContext, useToggleMegaNav, useToggleCart, useCartCount } from '@
 import Menu from '@components/menu';
 import MegaNavigation from '@components/menu-mega-nav';
 import Icon from '@components/icon';
-
-// import headerData from '@static-data/header';
-
 import { Slot } from '@uniformdev/upm-react';
 import { ComponentProps } from '@uniformdev/upm-react';
 import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';

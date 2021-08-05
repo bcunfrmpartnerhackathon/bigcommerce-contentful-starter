@@ -12,7 +12,6 @@ import { enhancers } from '@lib/enhancers';
 import { enhance } from '@uniformdev/upm';
 import Error from '@pages/404';
 import Layout from '@components/layout';
-import footerData from '@static-data/footer';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
 import { resolveRenderer } from '@components/composableComponents';
@@ -40,7 +39,6 @@ const pageData = {
       shareTitle: '{{page_title}} – {{site_title}}',
       siteTitle: null,
     },
-    footer: footerData,
     productCounts: productCountsData,
   },
 };
@@ -76,7 +74,7 @@ export default function Home({
   return (
     <Composition<PageProps> data={layout} resolveRenderer={resolveRenderer}>
       {({ entry }) => (
-        <Layout header={<Slot name="header" />} site={site} page={page} schema={undefined}>
+        <Layout header={<Slot name="header" />} footer={<Slot name="footer" />} site={site} page={page} schema={undefined}>
           <main>
             <h1>{entry?.fields.title}</h1>
             <Slot<PageSlots> name="content" />

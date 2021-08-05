@@ -15,6 +15,9 @@ import { FeaturedProducts } from '@components/FeaturedProducts';
 import { ProductCategories } from '@components/ProductCategories';
 import { ProductDetail } from '@components/ProductDetail';
 import { Hero } from '@components/Hero';
+import Footer from '@components/footer';
+import { FooterLinksBlock } from './footerBlocks/FooterLinksBlock';
+import Newsletter from './newsletter';
 
 const mappings: ComponentMapping = {
   header: Header,
@@ -30,7 +33,10 @@ const mappings: ComponentMapping = {
   featuredProducts: FeaturedProducts,
   productCategories: ProductCategories,
   productDetail: ProductDetail,
-  hero: Hero
+  hero: Hero,
+  footer: Footer,
+  footerNewsletterBlock: Newsletter,
+  footerLinksBlock: FooterLinksBlock,
 };
 
 type ComponentMapping = Record<string, ComponentType<any>>;

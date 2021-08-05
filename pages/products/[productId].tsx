@@ -10,8 +10,6 @@ import { bigCommerceClient } from '@lib/enhancers/bigCommerceEnhancer';
 // import { PreviewSwitch } from 'components/PreviewSwitch';
 import Error from '@pages/404';
 import Layout from '@components/layout';
-
-import footerData from '@static-data/footer';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
 
@@ -34,7 +32,6 @@ const pageData = {
       shareTitle: '{{page_title}} – {{site_title}}',
       siteTitle: null,
     },
-    footer: footerData,
     productCounts: productCountsData,
   },
 };
@@ -50,7 +47,7 @@ const ProductDetail = ({
   return (
     <Composition data={layout} resolveRenderer={resolveRenderer}>
       {() => (
-        <Layout header={<Slot name="header" />} site={pageData.site} page={pageData.page} schema={'Product'}>
+        <Layout header={<Slot name="header" />} footer={<Slot name="footer" />} site={pageData.site} page={pageData.page} schema={'Product'}>
           <Slot name="content" />
           <section>
             <Slot name="bottomRow" />

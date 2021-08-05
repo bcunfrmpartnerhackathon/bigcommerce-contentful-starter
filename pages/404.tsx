@@ -3,7 +3,7 @@ import Layout from '@components/layout';
 
 const ErrorPage = ({ data, statusCode }: { data: any; statusCode: number }) => {
   return (
-    <Layout header={undefined} site={data?.site} page={data?.page} schema={undefined}>
+    <Layout header={undefined} footer={undefined} site={data?.site} page={data?.page} schema={undefined}>
       <h1>{statusCode}</h1>
     </Layout>
   );

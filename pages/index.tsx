@@ -11,7 +11,6 @@ import { enhancers } from '@lib/enhancers';
 import { enhance } from '@uniformdev/upm';
 import Error from '@pages/404';
 import Layout from '@components/layout';
-import footerData from '@static-data/footer';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
 import { resolveRenderer } from '@components/composableComponents';
@@ -30,7 +29,6 @@ const pageData = {
       message: 'Free shipping on all orders!',
       storeURL: globals.siteUrl,
     },
-    footer: footerData,
     productCounts: productCountsData,
     rootDomain: globals.siteUrl,
     seo: {
@@ -73,7 +71,7 @@ export default function Home({
   return (
     <Composition<PageProps> data={layout} resolveRenderer={resolveRenderer}>
       {({ entry }) => (
-        <Layout header={<Slot name="header" />} site={site} page={page} schema={undefined}>
+        <Layout header={<Slot name="header" />} footer={<Slot name="footer" />} site={site} page={page} schema={undefined}>
           <main>
             <h1>{entry?.fields.title}</h1>
             <Slot name="content" />

@@ -16,7 +16,7 @@ export type HeroProps = ComponentProps<{
 export function Hero({ entry }: HeroProps) {
   // TODO: review this, TS doesn't like this
   // @ts-ignore
-  const { title, text, backgroundDesktopPhoto, backgroundMobilePhoto } = entry || {};
+  const { title, text, linkUrl, linkTitle, backgroundDesktopPhoto, backgroundMobilePhoto } = entry || {};
 
   return (
     <section className="hero">
@@ -25,25 +25,20 @@ export function Hero({ entry }: HeroProps) {
           <div className="hero--content">
             <h1>{title}</h1>
             <p>{text}</p>
-            <p>
-              <a className="btn is-white is-large" href="/shop">
-                Shop
-                <span aria-hidden="true" className="collection-count">
-                  6
-                </span>
-              </a>
-            </p>
+            {linkUrl && linkTitle && (
+              <p>
+                <a className="btn is-white is-large" href={linkUrl}>
+                  {linkTitle}
+                </a>
+              </p>
+            )}
           </div>
         </div>
       )}
 
       <>
         {backgroundDesktopPhoto && (
-          <img
-            src={backgroundDesktopPhoto.fields.file.url}
-            width={1600}
-            className="hero--bg"
-          />
+          <img src={backgroundDesktopPhoto.fields.file.url} width={1600} className="hero--bg" />
         )}
         {/* {backgroundMobilePhoto && (
           <img

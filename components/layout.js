@@ -5,9 +5,6 @@ import { m } from 'framer-motion'
 import { isBrowser, useWindowSize } from '@lib/helpers'
 
 import CookieBar from '@components/cookie-bar'
-import Header from '@components/Header'
-import Footer from '@components/footer'
-import { Slot } from '@uniformdev/upm-react'
 
 const duration = 0.4
 const variants = {
@@ -29,7 +26,7 @@ const variants = {
   },
 }
 
-const Layout = ({ header, site = {}, page = {}, schema, children }) => {
+const Layout = ({ header, footer, site = {}, page = {}, schema, children }) => {
   // set <head> variables
   const siteTitle = site.seo?.siteTitle
   const siteIcon = site.seo?.siteIcon
@@ -129,7 +126,7 @@ const Layout = ({ header, site = {}, page = {}, schema, children }) => {
       <m.div initial="initial" animate="enter" exit="exit" variants={variants}>
         {header}
         <main id="content">{children}</main>
-        <Footer data={site.footer} />
+        {footer}
       </m.div>
     </>
   )
