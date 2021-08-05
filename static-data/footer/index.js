@@ -68,7 +68,7 @@ const shopMenu =  [
     page: {
       isHome: false,
       isShop: true,
-      slug: 'all',
+      slug: '23',
       type: 'collection',
     },
     title: 'Everything',

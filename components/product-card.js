@@ -33,7 +33,6 @@ const ProductCard = ({
   onClick,
 }) => {
   if (!product) return null;
-
   return (
     <m.div variants={itemAnim} className={cx('product-card', className)}>
       {hasVisuals && (
@@ -42,7 +41,7 @@ const ProductCard = ({
           {showGallery && (
             <div className="product-card--gallery">
               <ProductGallery
-                photosets={product.images}
+                photos={product.images}
                 activeVariant={product}
                 hasArrows
                 hasDots

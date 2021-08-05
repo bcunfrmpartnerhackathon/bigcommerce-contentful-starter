@@ -1,6 +1,10 @@
 import { ComponentParameterEnhancer, compose, EnhancerBuilder } from '@uniformdev/upm';
 import { UPM_CONTENTFUL_PARAMETER_TYPES } from '@uniformdev/upm-contentful';
-import { GetProductsOptions, parameterIsBigCommerceProductQuery, UPM_BIGCOMMERCE_PARAMETER_TYPES } from '@uniformdev/upm-bigcommerce';
+import {
+  GetProductsOptions,
+  parameterIsBigCommerceProductQuery,
+  UPM_BIGCOMMERCE_PARAMETER_TYPES,
+} from '@uniformdev/upm-bigcommerce';
 import { contentfulEnhancer } from './contentfulEnhancer';
 import { bigCommerceEnhancer, bigCommerceClient } from './bigCommerceEnhancer';
 
@@ -14,10 +18,13 @@ const sysFieldCleanser = ({ parameter }) => {
 };
 
 const createBigCommerceContextQueryEnhancer = ({
-  productId
+  productId,
 }: {
-  productId: string
-}): ComponentParameterEnhancer<string | GetProductsOptions | string[], string | GetProductsOptions | string[]> => {
+  productId: string;
+}): ComponentParameterEnhancer<
+  string | GetProductsOptions | string[],
+  string | GetProductsOptions | string[]
+> => {
   return {
     enhanceOne: async (options) => {
       const { parameter } = options;
@@ -29,24 +36,20 @@ const createBigCommerceContextQueryEnhancer = ({
 
         processedValue = {
           ...parameter.value,
-          brand: product?.brand_id?.toString() || undefined
-        }
+          brand: product?.brand_id?.toString() || undefined,
+        };
       }
 
       return processedValue;
-    }
-  }
-}
+    },
+  };
+};
 
 export const enhancers = new EnhancerBuilder()
   .parameterType(UPM_CONTENTFUL_PARAMETER_TYPES, compose(contentfulEnhancer(), sysFieldCleanser))
   .parameterType(UPM_BIGCOMMERCE_PARAMETER_TYPES, bigCommerceEnhancer());
 
-export const buildProductDetailEnhancers = ({
-  productId
-}: {
-  productId: string | undefined
-}) => {
+export const buildProductDetailEnhancers = ({ productId }: { productId: string | undefined }) => {
   return new EnhancerBuilder()
     .data('product', async () => {
       if (!productId) {
@@ -57,5 +60,23 @@ export const buildProductDetailEnhancers = ({
 
       return product;
     })
-    .parameterType(UPM_BIGCOMMERCE_PARAMETER_TYPES, compose(createBigCommerceContextQueryEnhancer({ productId: productId! }), bigCommerceEnhancer()));
-}
+    .parameterType(
+      UPM_BIGCOMMERCE_PARAMETER_TYPES,
+      compose(createBigCommerceContextQueryEnhancer({ productId: productId! }), bigCommerceEnhancer())
+    );
+};
+
+export const buildProductCategoryEnhancers = ({ categoryName }: { categoryName: string | undefined }) => {
+  return new EnhancerBuilder().data('products', async () => {
+    if (!categoryName) {
+      return undefined;
+    }
+
+    // const categories = bigCommerceClient.getCategories();
+
+    const { products } = await bigCommerceClient.getProducts({ categories: [categoryName] });
+
+    console.log();
+    return products;
+  });
+};

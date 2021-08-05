@@ -9,7 +9,7 @@ const menuDesktopLeftItems = [
         page: {
           isHome: false,
           isShop: true,
-          slug: 'all',
+          slug: '23',
           type: 'collection',
         },
         title: 'Everything',
@@ -21,7 +21,7 @@ const menuDesktopLeftItems = [
         page: {
           isHome: false,
           isShop: false,
-          slug: 'bath',
+          slug: '18',
           type: 'collection',
         },
         title: 'Bath',
@@ -33,7 +33,7 @@ const menuDesktopLeftItems = [
         page: {
           isHome: false,
           isShop: false,
-          slug: 'garden',
+          slug: '19',
           type: 'collection',
         },
         title: 'Garden',
@@ -45,7 +45,7 @@ const menuDesktopLeftItems = [
         page: {
           isHome: false,
           isShop: false,
-          slug: 'kitchen',
+          slug: '21',
           type: 'collection',
         },
         title: 'Kitchen',
@@ -116,7 +116,7 @@ const menuMobilePrimaryItems = [
         page: {
           isHome: false,
           isShop: true,
-          slug: 'all',
+          slug: '23',
           type: 'collection',
         },
         title: 'Everything',
