@@ -1,0 +1,18 @@
+id: footerNewsletterBlock
+name: Footer Newsletter Block
+icon: undo
+parameters:
+  - id: entry
+    name: Entry
+    type: contentfulEntry
+    typeConfig:
+      required: true
+      allowedContentTypes:
+        newsletter:
+          id: newsletter
+          name: Newsletter
+slots: []
+titleParameter: entry
+canBeComposition: false
+created: '2021-08-05T19:25:01.419884+00:00'
+updated: '2021-08-05T19:44:41.385272+00:00'

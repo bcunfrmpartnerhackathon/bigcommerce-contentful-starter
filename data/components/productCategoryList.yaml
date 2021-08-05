@@ -1,0 +1,14 @@
+id: productCategoryList
+name: Product Category List
+icon: view-grid
+parameters:
+  - id: numberOrProductsToShow
+    name: Number or Products to Show
+    type: text
+    typeConfig:
+      required: true
+slots: []
+titleParameter: ''
+canBeComposition: false
+created: '2021-08-05T01:38:55.824776+00:00'
+updated: '2021-08-05T01:39:03.473077+00:00'

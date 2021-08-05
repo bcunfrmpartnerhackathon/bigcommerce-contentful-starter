@@ -1,0 +1,18 @@
+id: footerLinksBlock
+name: Footer Links Block
+icon: link
+parameters:
+  - id: entry
+    name: Entry
+    type: contentfulEntry
+    typeConfig:
+      required: true
+      allowedContentTypes:
+        navItem:
+          id: navItem
+          name: Nav Item
+slots: []
+titleParameter: entry
+canBeComposition: false
+created: '2021-08-05T19:25:31.147306+00:00'
+updated: '2021-08-05T19:25:41.019194+00:00'

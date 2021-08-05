@@ -1,0 +1,18 @@
+id: productHero
+name: Product Hero
+icon: awards
+parameters: []
+slots:
+  - id: productHero
+    name: Product Hero
+    maxComponents: 2
+    allowedComponents:
+      - productDetailInfo
+      - productImageGallery
+      - $test
+      - $personalization
+    inheritAllowedComponents: false
+titleParameter: ''
+canBeComposition: false
+created: '2021-08-04T23:25:01.181709+00:00'
+updated: '2021-08-04T23:28:30.909721+00:00'

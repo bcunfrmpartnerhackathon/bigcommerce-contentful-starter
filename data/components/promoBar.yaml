@@ -1,0 +1,18 @@
+id: promoBar
+name: Promo Bar
+icon: alarm
+parameters:
+  - id: entry
+    name: Entry
+    type: contentfulEntry
+    typeConfig:
+      required: true
+      allowedContentTypes:
+        promo:
+          id: promo
+          name: Promo
+slots: []
+titleParameter: entry
+canBeComposition: false
+created: '2021-08-05T14:20:24.755338+00:00'
+updated: '2021-08-05T14:26:42.50312+00:00'

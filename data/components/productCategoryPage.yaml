@@ -1,6 +1,6 @@
-id: productDetail
-name: Product Detail Page
-icon: coffee
+id: productCategoryPage
+name: Product Category Page
+icon: tag
 parameters: []
 slots:
   - id: header
@@ -12,17 +12,8 @@ slots:
   - id: content
     name: Content
     allowedComponents:
-      - productDetailInfo
-      - $test
-      - $personalization
-      - productImageGallery
-      - productHero
-    inheritAllowedComponents: false
-  - id: bottomRow
-    name: Bottom Row
-    maxComponents: 1
-    allowedComponents:
-      - recommendedProducts
+      - productCategoryHeader
+      - productCategoryList
     inheritAllowedComponents: false
   - id: footer
     name: Footer
@@ -32,5 +23,5 @@ slots:
     inheritAllowedComponents: false
 titleParameter: ''
 canBeComposition: true
-created: '2021-08-03T02:20:17.965799+00:00'
-updated: '2021-08-05T19:26:32.103621+00:00'
+created: '2021-08-05T01:37:06.292825+00:00'
+updated: '2021-08-05T19:26:19.327295+00:00'
