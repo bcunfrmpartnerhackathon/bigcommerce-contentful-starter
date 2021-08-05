@@ -9,8 +9,15 @@ slots:
       - productDetailInfo
       - $test
       - $personalization
+      - productImageGallery
+    inheritAllowedComponents: false
+  - id: bottomRow
+    name: Bottom Row
+    maxComponents: 1
+    allowedComponents:
+      - recommendedProducts
     inheritAllowedComponents: false
 titleParameter: ''
 canBeComposition: true
 created: '2021-08-03T02:20:17.965799+00:00'
-updated: '2021-08-03T02:35:43.242843+00:00'
+updated: '2021-08-03T18:52:50.586745+00:00'

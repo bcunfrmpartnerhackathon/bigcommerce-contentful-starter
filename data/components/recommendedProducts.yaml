@@ -1,0 +1,13 @@
+id: recommendedProducts
+name: Recommended Products
+icon: screen
+parameters:
+  - id: productQuery
+    name: Product query
+    type: bigcommerceProductQuery
+    typeConfig: null
+slots: []
+titleParameter: ''
+canBeComposition: false
+created: '2021-08-03T18:52:21.669054+00:00'
+updated: '2021-08-03T18:52:21.669054+00:00'

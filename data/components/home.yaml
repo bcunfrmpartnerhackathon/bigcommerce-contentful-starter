@@ -6,12 +6,14 @@ slots:
   - id: content
     name: Content
     allowedComponents:
-      - productDetail
       - productCategories
       - $personalization
       - $test
+      - hero
+      - featuredProducts
+      - callToAction
     inheritAllowedComponents: false
 titleParameter: ''
 canBeComposition: true
 created: '2021-08-03T02:22:22.614228+00:00'
-updated: '2021-08-03T02:22:29.405045+00:00'
+updated: '2021-08-04T20:39:51.239275+00:00'

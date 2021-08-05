@@ -8,8 +8,10 @@
       "esnext"
     ],
     "paths": {
-      "@/lib/*": ["src/lib/*"],
-      "@/components/*": ["components/*"]
+      "@lib/*": ["src/lib/*"],
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@static-data/*": ["static-data/*"],
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -26,8 +28,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx"],
   "exclude": [
     "node_modules",
     "worker"

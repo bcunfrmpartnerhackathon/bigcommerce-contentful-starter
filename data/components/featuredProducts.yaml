@@ -1,0 +1,27 @@
+id: featuredProducts
+name: Featured Products
+icon: bolt
+parameters:
+  - id: pausable
+    name: Pausable
+    type: checkbox
+    typeConfig: null
+  - id: speed
+    name: Speed
+    type: text
+    typeConfig:
+      required: true
+  - id: reverse
+    name: Reverse
+    type: checkbox
+    typeConfig: null
+  - id: products
+    name: Products
+    type: bigcommerceProductList
+    typeConfig:
+      required: true
+slots: []
+titleParameter: ''
+canBeComposition: false
+created: '2021-08-03T21:15:14.005272+00:00'
+updated: '2021-08-04T20:09:11.058234+00:00'
