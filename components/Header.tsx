@@ -1,55 +1,57 @@
-import React, { useState, useRef } from 'react'
-import { m } from 'framer-motion'
-import FocusTrap from 'focus-trap-react'
-import { useIntersection } from 'use-intersection'
-import { useRect } from '@reach/rect'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import cx from 'classnames'
+import React, { useState, useRef } from 'react';
+import { m } from 'framer-motion';
+import FocusTrap from 'focus-trap-react';
+import { useIntersection } from 'use-intersection';
+import { useRect } from '@reach/rect';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+const cx = require('classnames');
+import { isBrowser } from '@lib/helpers';
 
-import { isBrowser } from '@lib/helpers'
+import { useSiteContext, useToggleMegaNav, useToggleCart, useCartCount } from '@lib/context';
 
-import {
-  useSiteContext,
-  useToggleMegaNav,
-  useToggleCart,
-  useCartCount,
-} from '@lib/context'
+import Menu from '@components/menu';
+import MegaNavigation from '@components/menu-mega-nav';
+import Icon from '@components/icon';
 
-import PromoBar from '@components/promo-bar'
-import Menu from '@components/menu'
-import MegaNavigation from '@components/menu-mega-nav'
-import Icon from '@components/icon'
+// import headerData from '@static-data/header';
 
-const Header = ({ data = {}, isTransparent }) => {
-  // expand our header data
-  const {
-    menuDesktopLeft,
-    menuDesktopRight,
-    menuMobilePrimary,
-    menuMobileSecondary,
-  } = data
+import { Slot } from '@uniformdev/upm-react';
+import { ComponentProps } from '@uniformdev/upm-react';
+import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';
+
+export type HeaderProps = ComponentProps<{
+  entry: ContentfulEnhancerResult<{
+    isTransparent: boolean;
+  }>;
+  isTransparent: boolean;
+}>;
+
+const Header = ({ entry, isTransparent }: HeaderProps) => {
+  // @ts-ignore
+  const { menuDesktopLeft, menuDesktopRight, menuMobilePrimary, menuMobileSecondary } = entry || {};
 
   // setup states
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false)
-  const observerRef = useRef()
-  const observerIsVisible = useIntersection(observerRef)
-  const headerRef = useRef()
-  const headerRect = useRect(headerRef)
-  const router = useRouter()
+  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const observerRef = useRef();
+  // @ts-ignore
+  const observerIsVisible = useIntersection(observerRef);
+  const headerRef = useRef();
+  const headerRect = useRect(headerRef);
+  const router = useRouter();
 
   // setup menu toggle event
-  const toggleMobileNav = (state) => {
-    setMobileNavOpen(state)
+  const toggleMobileNav = (state: any) => {
+    setMobileNavOpen(state);
 
     if (isBrowser) {
-      document.body.classList.toggle('overflow-hidden', state)
+      document.body.classList.toggle('overflow-hidden', state);
     }
-  }
+  };
 
   // context helpers
-  const { meganav } = useSiteContext()
-  const toggleMegaNav = useToggleMegaNav()
+  const { meganav } = useSiteContext();
+  const toggleMegaNav = useToggleMegaNav();
 
   return (
     <>
@@ -57,7 +59,8 @@ const Header = ({ data = {}, isTransparent }) => {
         Skip to Content
       </a>
 
-      <PromoBar />
+      {/* <PromoBar /> */}
+      <Slot name="headerTop" />
 
       <header
         className={cx('header', {
@@ -66,16 +69,13 @@ const Header = ({ data = {}, isTransparent }) => {
           'has-bg': !observerIsVisible,
         })}
       >
+        {/* @ts-ignore */}
         <div ref={headerRef} className="header--outer">
           <div className="header--inner">
             <div className="header--content">
               <div className="logo">
                 {router.pathname === '/' ? (
-                  <button
-                    className="logo--link"
-                    aria-label="Go Home"
-                    onClick={() => window.scrollTo(0, 0)}
-                  >
+                  <button className="logo--link" aria-label="Go Home" onClick={() => window.scrollTo(0, 0)}>
                     <Icon name="Logo" id="header" viewBox="0 0 215 150" />
                   </button>
                 ) : (
@@ -119,29 +119,19 @@ const Header = ({ data = {}, isTransparent }) => {
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="menu-mobile"
                       >
-                        <div
-                          className="menu-mobile--inner"
-                          style={
-                            headerRect?.height
-                              ? { '--headerHeight': `${headerRect.height}px` }
-                              : null
-                          }
-                        >
+                        {/* @ts-ignore */}
+                        <div className="menu-mobile--inner" style={headerRect?.height ? { '--headerHeight': `${headerRect.height}px` } : undefined}>
                           <div className="menu-mobile--primary">
-                            {menuMobilePrimary?.items && (
-                              <Menu
-                                items={menuMobilePrimary.items}
-                                onClick={() => toggleMobileNav(false)}
-                              />
+                            {menuMobilePrimary && (
+                               //@ts-ignore
+                              <Menu items={menuMobilePrimary} onClick={() => toggleMobileNav(false)} />
                             )}
                           </div>
 
                           <div className="menu-mobile--secondary">
-                            {menuMobileSecondary?.items && (
-                              <Menu
-                                items={menuMobileSecondary.items}
-                                onClick={() => toggleMobileNav(false)}
-                              />
+                            {menuMobileSecondary && (
+                               //@ts-ignore
+                              <Menu items={menuMobileSecondary} onClick={() => toggleMobileNav(false)} />
                             )}
                           </div>
                         </div>
@@ -162,22 +152,14 @@ const Header = ({ data = {}, isTransparent }) => {
                 {/* Desktop Header Menu */}
                 <div className="main-navigation--desktop">
                   <div className="menu-left">
-                    {menuDesktopLeft?.items && (
-                      <Menu
-                        items={menuDesktopLeft.items}
-                        onClick={() => toggleMegaNav(false)}
-                        useMegaNav
-                      />
+                    {menuDesktopLeft && (
+                      <Menu items={menuDesktopLeft} onClick={() => toggleMegaNav(false)} useMegaNav />
                     )}
                   </div>
 
                   <div className="menu-right">
-                    {menuDesktopRight?.items && (
-                      <Menu
-                        items={menuDesktopRight.items}
-                        onClick={() => toggleMegaNav(false)}
-                        useMegaNav
-                      />
+                    {menuDesktopRight && (
+                      <Menu items={menuDesktopRight} onClick={() => toggleMegaNav(false)} useMegaNav />
                     )}
 
                     <CartToggle />
@@ -194,25 +176,21 @@ const Header = ({ data = {}, isTransparent }) => {
           </div>
 
           <MegaNavigation
-            items={[
-              ...(menuDesktopLeft?.items || []),
-              ...(menuDesktopRight?.items || []),
-            ]}
-            headerHeight={
-              isTransparent && observerIsVisible ? headerRect?.height : false
-            }
+            items={[...(menuDesktopLeft || []), ...(menuDesktopRight || [])]}
+            headerHeight={isTransparent && observerIsVisible ? headerRect?.height : false}
           />
         </div>
       </header>
 
+      {/* @ts-ignore */}
       <span ref={observerRef} className="header--observer" />
     </>
-  )
-}
+  );
+};
 
 const CartToggle = () => {
-  const toggleCart = useToggleCart()
-  const cartCount = useCartCount()
+  const toggleCart = useToggleCart();
+  const cartCount = useCartCount();
 
   return (
     <button className="cart-toggle" onClick={() => toggleCart()}>
@@ -225,18 +203,7 @@ const CartToggle = () => {
         {cartCount}
       </span>
     </button>
-  )
-}
+  );
+};
 
-const HeaderBackdrop = ({ isActive, onClick }) => {
-  return (
-    <div
-      className={cx('header--backdrop', {
-        'is-active': isActive,
-      })}
-      onClick={onClick}
-    />
-  )
-}
-
-export default Header
+export default Header;

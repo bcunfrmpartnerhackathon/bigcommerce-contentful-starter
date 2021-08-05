@@ -1,62 +1,51 @@
-import React, { useRef, useState, useEffect } from 'react'
-import FocusTrap from 'focus-trap-react'
-import { m } from 'framer-motion'
-import { useRect } from '@reach/rect'
-import cx from 'classnames'
-
-import { isBrowser } from '@lib/helpers'
-import { swipeAnim } from '@lib/animate'
-
-import { useSiteContext, useToggleMegaNav } from '@lib/context'
-
-import Menu from '@components/menu'
-import FeaturedProducts from '@components/menu-featured-products'
+import React, { useRef, useState, useEffect } from 'react';
+import FocusTrap from 'focus-trap-react';
+import { m } from 'framer-motion';
+import { useRect } from '@reach/rect';
+import cx from 'classnames';
+import { isBrowser } from '@lib/helpers';
+import { swipeAnim } from '@lib/animate';
+import { useSiteContext, useToggleMegaNav } from '@lib/context';
+import Menu from '@components/menu';
+import FeaturedProducts from '@components/menu-featured-products';
 
 const MegaNavigation = ({ items = [], headerHeight }) => {
   const dropdowns = items.filter((item) => {
-    return 'dropdownItems' in item
-  })
+    return item?.fields?.subNavItems && item?.fields?.subNavItems.length > 0;
+  });
 
-  if (!dropdowns.length) return null
+  if (!dropdowns.length) return null;
 
-  const toggleMegaNav = useToggleMegaNav()
-  const { meganav } = useSiteContext()
-  const activeNav = useRef()
-  const activeNavRect = useRect(activeNav, { observe: true })
-  const [hasFocus, setHasFocus] = useState(false)
+  const toggleMegaNav = useToggleMegaNav();
+  const { meganav } = useSiteContext();
+  const activeNav = useRef();
+  const activeNavRect = useRect(activeNav, { observe: true });
+  const [hasFocus, setHasFocus] = useState(false);
 
   const handleKeyup = (e) => {
     if (e.which === 27) {
-      toggleMegaNav(false)
+      toggleMegaNav(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (isBrowser) {
-      document.body.classList.toggle('overflow-hidden', meganav.isOpen)
+      document.body.classList.toggle('overflow-hidden', meganav.isOpen);
     }
-  }, [meganav.isOpen])
+  }, [meganav.isOpen]);
 
   return (
     <>
-      <FocusTrap
-        active={meganav.isOpen && hasFocus}
-        focusTrapOptions={{ allowOutsideClick: true }}
-      >
-        <div
-          ref={!meganav.isOpen ? activeNav : null}
-          className="mega-nav"
-          onKeyUp={(e) => handleKeyup(e)}
-        >
+      <FocusTrap active={meganav.isOpen && hasFocus} focusTrapOptions={{ allowOutsideClick: true }}>
+        <div ref={!meganav.isOpen ? activeNav : null} className="mega-nav" onKeyUp={(e) => handleKeyup(e)}>
           {dropdowns.map((dropdown, key) => {
-            const isActive =
-              meganav.isOpen && meganav.activeID === dropdown._key
-
+            const _key = dropdown?.sys?.id;
+            const isActive = meganav.isOpen && meganav.activeID === _key;
             return (
               <div
                 key={key}
                 ref={isActive ? (ref) => (activeNav.current = ref) : null}
-                id={`meganav-${dropdown._key}`}
+                id={`meganav-${_key}`}
                 className={cx('mega-item', {
                   'is-active': isActive,
                 })}
@@ -71,12 +60,12 @@ const MegaNavigation = ({ items = [], headerHeight }) => {
                       className="mega-item--content"
                     >
                       <Menu
-                        items={dropdown.dropdownItems}
+                        items={dropdown?.fields?.subNavItems}
                         hasFocus={hasFocus && isActive}
                         onClick={() => toggleMegaNav(false)}
                       />
 
-                      {dropdown.featured && (
+                      {dropdown && dropdown.featured && (
                         <div className="mega-item--featured">
                           <div className="mega-item--featured-title">
                             <span>Featured</span>
@@ -91,7 +80,7 @@ const MegaNavigation = ({ items = [], headerHeight }) => {
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </FocusTrap>
@@ -99,9 +88,7 @@ const MegaNavigation = ({ items = [], headerHeight }) => {
         className={cx('mega-nav--bg')}
         style={{
           '--h': meganav.isOpen ? activeNavRect?.height + headerHeight : 0,
-          '--hpx': `${
-            meganav.isOpen ? activeNavRect?.height + headerHeight : 0
-          }px`,
+          '--hpx': `${meganav.isOpen ? activeNavRect?.height + headerHeight : 0}px`,
         }}
       />
 
@@ -114,14 +101,14 @@ const MegaNavigation = ({ items = [], headerHeight }) => {
         onClick={() => toggleMegaNav(false)}
       />
     </>
-  )
-}
+  );
+};
 
 export const MegaDropdownButton = ({ title, id }) => {
-  const toggleMegaNav = useToggleMegaNav()
-  const { meganav } = useSiteContext()
+  const toggleMegaNav = useToggleMegaNav();
+  const { meganav } = useSiteContext();
 
-  const isActive = meganav.activeID === id
+  const isActive = meganav.activeID === id;
 
   return (
     <button
@@ -133,7 +120,7 @@ export const MegaDropdownButton = ({ title, id }) => {
       <span className="mega-toggle--icon" />
       {title}
     </button>
-  )
-}
+  );
+};
 
-export default MegaNavigation
+export default MegaNavigation;

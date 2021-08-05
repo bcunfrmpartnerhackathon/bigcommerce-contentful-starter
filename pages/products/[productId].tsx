@@ -1,22 +1,17 @@
-import React, { ComponentProps, ComponentType } from 'react';
+import React from 'react';
 import { GetStaticPaths, GetStaticPropsContext } from 'next';
 import { upmClient } from '@lib/upmClient';
 import { buildProductDetailEnhancers } from '@lib/enhancers';
 import { enhance } from '@uniformdev/upm';
 import { Composition, Slot } from '@uniformdev/upm-react';
-import { ComponentInstance, RootComponentInstance } from '@uniformdev/upm';
-import { ProductImageGallery } from '@components/product/ProductImageGallery';
-import { ProductDetailInfo } from '@components/product/ProductDetailInfo';
-import { Visualizer } from '@components/Visualizer';
-import { ProductRecommendedProducts } from '@components/product/ProductRecommendedProducts';
+import { RootComponentInstance } from '@uniformdev/upm';
+import { resolveRenderer } from '@components/composableComponents';
 import { bigCommerceClient } from '@lib/enhancers/bigCommerceEnhancer';
-import { PreviewSwitch } from 'components/PreviewSwitch';
+// import { PreviewSwitch } from 'components/PreviewSwitch';
 import Error from '@pages/404';
 import Layout from '@components/layout';
-import { ProductHero } from '@components/product/ProductHero';
 
 import footerData from '@static-data/footer';
-import headerData from '@static-data/header';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
 
@@ -35,38 +30,14 @@ const pageData = {
       metaDesc: globals.siteTitle,
       metaTitle: '{{page_title}} – {{site_title}}',
       shareDesc: globals.siteTitle,
-      shareGraphic: "todo-image",
+      shareGraphic: 'todo-image',
       shareTitle: '{{page_title}} – {{site_title}}',
       siteTitle: null,
     },
     footer: footerData,
-    header: headerData,
     productCounts: productCountsData,
-    cart: {
-      message: 'Free shipping on orders over $666',
-      storeURL: globals.siteUrl,
-    },
   },
 };
-
-function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
-  switch (component.type) {
-    case 'productHero':
-      return ProductHero;
-    case 'productImageGallery':
-      return ProductImageGallery;
-    case 'productDetailInfo':
-      return ProductDetailInfo;
-    case 'recommendedProducts':
-      return ProductRecommendedProducts;
-    default:
-      return Visualizer;
-  }
-}
-
-type ProductDetailProps = {};
-
-type ProductDetailSlots = 'content' | 'bottomRow';
 
 const ProductDetail = ({
   layout,
@@ -77,21 +48,16 @@ const ProductDetail = ({
   pageData: any;
 }) => {
   return (
-    <Layout site={pageData.site} page={pageData.page} schema={'Product'}>
-      <Composition<ProductDetailProps> data={layout} resolveRenderer={resolveRendering}>
-        {() => (
-          <>
-            <Slot<ProductDetailSlots> name="content" />
-            <section>
-              <Slot<ProductDetailSlots> name="bottomRow" />
-            </section>
-          </>
-        )}
-      </Composition>
-      {/* <h2>Raw layout data</h2>
-    <pre>{JSON.stringify(layout, null, 2)}</pre> */}
-      {/* <PreviewSwitch /> */}
-    </Layout>
+    <Composition data={layout} resolveRenderer={resolveRenderer}>
+      {() => (
+        <Layout header={<Slot name="header" />} site={pageData.site} page={pageData.page} schema={'Product'}>
+          <Slot name="content" />
+          <section>
+            <Slot name="bottomRow" />
+          </section>
+        </Layout>
+      )}
+    </Composition>
   );
 };
 

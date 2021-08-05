@@ -86,6 +86,7 @@ export default function MyApp({ Component, pageProps, router }: any) {
               <Component key={router.asPath.split('?')[0]} {...pageProps} />
             </UniformTracker>
           </AnimatePresence>
+          {/* @ts-ignore */}
           <Cart data={{ ...pageProps?.data?.site }} />
         </LazyMotion>
       </SiteContextProvider>

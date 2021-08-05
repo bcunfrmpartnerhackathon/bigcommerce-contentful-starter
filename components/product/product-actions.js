@@ -11,9 +11,9 @@ const ProductActions = ({ product }) => {
       {/* TODO: add stock check */}
       {true ? (
         <>
-          <ProductCounter id={product.id} max={10} onUpdate={setQuantity} />
+          <ProductCounter id={product?.id} max={10} onUpdate={setQuantity} />
           <ProductAdd
-            productID={product.id}
+            productID={product?.id}
             quantity={quantity}
             className="btn is-primary is-large is-block"
           >

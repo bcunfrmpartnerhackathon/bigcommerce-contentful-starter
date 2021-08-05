@@ -1,26 +1,19 @@
-import React, { ComponentProps, ComponentType } from 'react';
+import React from 'react';
 import { GetStaticPaths, GetStaticPropsContext } from 'next';
 import { upmClient } from '@lib/upmClient';
 import { buildProductCategoryEnhancers } from '@lib/enhancers';
 import { enhance } from '@uniformdev/upm';
 import { Composition, Slot } from '@uniformdev/upm-react';
-import { ComponentInstance, RootComponentInstance } from '@uniformdev/upm';
-import { ProductImageGallery } from '@components/product/ProductImageGallery';
-import { ProductDetailInfo } from '@components/product/ProductDetailInfo';
-import { Visualizer } from '@components/Visualizer';
-import { ProductRecommendedProducts } from '@components/product/ProductRecommendedProducts';
+import { RootComponentInstance } from '@uniformdev/upm';
 import { bigCommerceClient } from '@lib/enhancers/bigCommerceEnhancer';
 import { PreviewSwitch } from 'components/PreviewSwitch';
 import Error from '@pages/404';
 import Layout from '@components/layout';
-import { ProductHero } from '@components/product/ProductHero';
+import { resolveRenderer } from '@components/composableComponents';
 
 import footerData from '@static-data/footer';
-import headerData from '@static-data/header';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
-import { ProductCategoryHeader } from '@components/categories/ProductCategoryHeader';
-import { ProductCategoryList } from '@components/categories/ProductCategoryList';
 
 const pageData = {
   page: {
@@ -42,7 +35,6 @@ const pageData = {
       siteTitle: null,
     },
     footer: footerData,
-    header: headerData,
     productCounts: productCountsData,
     cart: {
       message: 'Free shipping on orders over $666',
@@ -50,19 +42,6 @@ const pageData = {
     },
   },
 };
-
-function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
-  switch (component.type) {
-    case 'productCategoryHeader':
-      return ProductCategoryHeader;
-    case 'productCategoryList':
-      return ProductCategoryList;
-    default:
-      return Visualizer;
-  }
-}
-
-type ShopCategorySlots = 'content';
 
 const ShopCategory = ({
   layout,
@@ -73,14 +52,13 @@ const ShopCategory = ({
   pageData: any;
 }) => {
   return (
-    <Layout site={pageData.site} page={pageData.page} schema={'Product'}>
-      <Composition<ShopCategorySlots> data={layout} resolveRenderer={resolveRendering}>
-        {() => <Slot<ShopCategorySlots> name="content" />}
-      </Composition>
-      {/* <h2>Raw layout data</h2>
-    <pre>{JSON.stringify(layout, null, 2)}</pre> */}
-      {/* <PreviewSwitch /> */}
-    </Layout>
+    <Composition data={layout} resolveRenderer={resolveRenderer}>
+      {() => (
+        <Layout header={<Slot name="header" />} site={pageData.site} page={pageData.page} schema={'Product'}>
+          <Slot name="content" />
+        </Layout>
+      )}
+    </Composition>
   );
 };
 
