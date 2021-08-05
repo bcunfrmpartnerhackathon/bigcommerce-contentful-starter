@@ -42,9 +42,6 @@ export function Hero({ entry }: HeroProps) {
           <img
             src={backgroundDesktopPhoto.fields.file.url}
             width={1600}
-            // srcsizes={[800, 1000, 1200, 1600]}
-            sizes="100vw"
-            // layout="fill"
             className="hero--bg"
           />
         )}

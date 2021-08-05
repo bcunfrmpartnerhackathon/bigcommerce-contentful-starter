@@ -63,7 +63,8 @@ export const buildProductDetailEnhancers = ({ productId }: { productId: string |
     .parameterType(
       UPM_BIGCOMMERCE_PARAMETER_TYPES,
       compose(createBigCommerceContextQueryEnhancer({ productId: productId! }), bigCommerceEnhancer())
-    );
+    )
+    .parameterType(UPM_CONTENTFUL_PARAMETER_TYPES, compose(contentfulEnhancer(), sysFieldCleanser));
 };
 
 export const buildProductCategoryEnhancers = ({ categoryName }: { categoryName: string | undefined }) => {

@@ -1,27 +1,22 @@
-import React, { ComponentType } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 
 import { GetStaticPaths, GetStaticPropsContext } from 'next';
-import { ComponentInstance, RootComponentInstance } from '@uniformdev/upm';
-import { ComponentProps, Composition, Slot } from '@uniformdev/upm-react';
+import { RootComponentInstance } from '@uniformdev/upm';
+import { Composition, Slot } from '@uniformdev/upm-react';
 import { PreviewSwitch } from 'components/PreviewSwitch';
 import { useLivePreviewNextStaticProps } from 'src/hooks/useLivePreviewNextStaticProps';
-import { Visualizer } from 'components/Visualizer';
 import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';
 import { upmClient } from '@lib/upmClient';
-import { ProductDetail } from 'components/ProductDetail';
-import { ProductCategories } from 'components/ProductCategories';
 import { enhancers } from '@lib/enhancers';
 import { enhance } from '@uniformdev/upm';
-import { Hero } from '@components/Hero';
-import { FeaturedProducts } from '@components/FeaturedProducts';
-import { CallToAction } from '@components/CallToAction';
 import Error from '@pages/404';
 import Layout from '@components/layout';
 import footerData from '@static-data/footer';
 import headerData from '@static-data/header';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
+import { resolveRenderer } from '@components/composableComponents';
 
 const pageData = {
   page: {
@@ -52,23 +47,6 @@ const pageData = {
   },
 };
 
-function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
-  switch (component.type) {
-    case 'callToAction':
-      return CallToAction;
-    case 'hero':
-      return Hero;
-    case 'featuredProducts':
-      return FeaturedProducts;
-    case 'productCategories':
-      return ProductCategories;
-    case 'productDetail':
-      return ProductDetail;
-    default:
-      return Visualizer;
-  }
-}
-
 type PageProps = {
   entry: ContentfulEnhancerResult<{ title: string }>;
 };
@@ -97,22 +75,17 @@ export default function Home({
 
   const { site, page } = pageData;
 
-  // @ts-ignore
   return (
-    <Layout site={site} page={page} schema={undefined}>
-      <Composition<PageProps> data={layout} resolveRenderer={resolveRendering}>
-        {({ entry }) => (
+    <Composition<PageProps> data={layout} resolveRenderer={resolveRenderer}>
+      {({ entry }) => (
+        <Layout header={<Slot name="header" />} site={site} page={page} schema={undefined}>
           <main>
             <h1>{entry?.fields.title}</h1>
             <Slot<PageSlots> name="content" />
           </main>
-        )}
-      </Composition>
-
-      {/* <h2>Raw layout data</h2>
-      <pre>{JSON.stringify(layout, null, 2)}</pre> */}
-      {/* <PreviewSwitch /> */}
-    </Layout>
+        </Layout>
+      )}
+    </Composition>
   );
 }
 
