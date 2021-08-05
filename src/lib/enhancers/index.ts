@@ -68,16 +68,14 @@ export const buildProductDetailEnhancers = ({ productId }: { productId: string |
 };
 
 export const buildProductCategoryEnhancers = ({ categoryName }: { categoryName: string | undefined }) => {
-  return new EnhancerBuilder().data('products', async () => {
-    if (!categoryName) {
-      return undefined;
-    }
-
-    // const categories = bigCommerceClient.getCategories();
-
-    const { products } = await bigCommerceClient.getProducts({ categories: [categoryName] });
-
-    console.log();
-    return products;
-  });
+  return new EnhancerBuilder()
+    .data('products', async () => {
+      if (!categoryName) {
+        return undefined;
+      }
+      // const categories = bigCommerceClient.getCategories();
+      const { products } = await bigCommerceClient.getProducts({ categories: [categoryName] });
+      return products;
+    })
+    .parameterType(UPM_CONTENTFUL_PARAMETER_TYPES, compose(contentfulEnhancer(), sysFieldCleanser));
 };

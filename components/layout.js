@@ -5,7 +5,7 @@ import { m } from 'framer-motion'
 import { isBrowser, useWindowSize } from '@lib/helpers'
 
 import CookieBar from '@components/cookie-bar'
-import Header from '@components/header'
+import Header from '@components/Header'
 import Footer from '@components/footer'
 import { Slot } from '@uniformdev/upm-react'
 

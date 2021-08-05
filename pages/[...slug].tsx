@@ -13,7 +13,6 @@ import { enhance } from '@uniformdev/upm';
 import Error from '@pages/404';
 import Layout from '@components/layout';
 import footerData from '@static-data/footer';
-import headerData from '@static-data/header';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
 import { resolveRenderer } from '@components/composableComponents';
@@ -42,7 +41,6 @@ const pageData = {
       siteTitle: null,
     },
     footer: footerData,
-    header: headerData,
     productCounts: productCountsData,
   },
 };

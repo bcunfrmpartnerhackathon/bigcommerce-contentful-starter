@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import FocusTrap from 'focus-trap-react'
-import { m } from 'framer-motion'
-import cx from 'classnames'
+import React, { useState, useEffect } from 'react';
+import FocusTrap from 'focus-trap-react';
+import { m } from 'framer-motion';
+import cx from 'classnames';
 
-import { centsToPrice } from '@lib/helpers'
+import { centsToPrice } from '@lib/helpers';
+import globals from '@static-data/globals';
 
 import {
   useSiteContext,
@@ -12,59 +13,55 @@ import {
   useCartItems,
   useCheckout,
   useToggleCart,
-} from '@lib/context'
+} from '@lib/context';
 
-import CartItem from '@components/cart-item'
+import CartItem from '@components/cart-item';
 
-const Cart = ({ data }) => {
-  const { cart } = data
+const cartData = {
+  message: 'Free shipping on orders over $666',
+  storeURL: globals.siteUrl,
+};
 
-  if (!cart) return null
+const Cart = () => {
+  const cart = cartData;
+  const { isCartOpen, isUpdating } = useSiteContext();
+  const { subTotal } = useCartTotals();
+  const cartCount = useCartCount();
+  const lineItems = useCartItems();
+  const checkoutURL = useCheckout();
+  const toggleCart = useToggleCart();
 
-  const { isCartOpen, isUpdating } = useSiteContext()
-  const { subTotal } = useCartTotals()
-  const cartCount = useCartCount()
-  const lineItems = useCartItems()
-  const checkoutURL = useCheckout()
-  const toggleCart = useToggleCart()
-
-  const [hasFocus, setHasFocus] = useState(false)
-  const [checkoutLink, setCheckoutLink] = useState(checkoutURL)
+  const [hasFocus, setHasFocus] = useState(false);
+  const [checkoutLink, setCheckoutLink] = useState(checkoutURL);
 
   const handleKeyup = (e) => {
     if (e.which === 27) {
-      toggleCart(false)
+      toggleCart(false);
     }
-  }
+  };
 
   const goToCheckout = (e) => {
-    e.preventDefault()
-    toggleCart(false)
+    e.preventDefault();
+    toggleCart(false);
 
     setTimeout(() => {
-      window.open(checkoutLink, '_self')
-    }, 200)
-  }
+      window.open(checkoutLink, '_self');
+    }, 200);
+  };
 
   // update our checkout URL to use our custom domain name
   useEffect(() => {
     if (checkoutURL) {
       const buildCheckoutLink = cart.storeURL
-        ? checkoutURL.replace(
-            /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/g,
-            cart.storeURL
-          )
-        : checkoutURL
-      setCheckoutLink(buildCheckoutLink)
+        ? checkoutURL.replace(/^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/g, cart.storeURL)
+        : checkoutURL;
+      setCheckoutLink(buildCheckoutLink);
     }
-  }, [checkoutURL])
+  }, [checkoutURL]);
 
   return (
     <>
-      <FocusTrap
-        active={isCartOpen && hasFocus}
-        focusTrapOptions={{ allowOutsideClick: true }}
-      >
+      <FocusTrap active={isCartOpen && hasFocus} focusTrapOptions={{ allowOutsideClick: true }}>
         <m.div
           initial="hide"
           animate={isCartOpen ? 'show' : 'hide'}
@@ -95,11 +92,7 @@ const Cart = ({ data }) => {
             </div>
 
             <div className="cart--content">
-              {lineItems?.length ? (
-                <CartItems items={lineItems} />
-              ) : (
-                <EmptyCart />
-              )}
+              {lineItems?.length ? <CartItems items={lineItems} /> : <EmptyCart />}
             </div>
 
             {lineItems?.length > 0 && (
@@ -117,9 +110,7 @@ const Cart = ({ data }) => {
                   {isUpdating ? 'Updating...' : 'Checkout'}
                 </a>
 
-                {cart.message && (
-                  <p className="cart--message">{cart.message}</p>
-                )}
+                {cart.message && <p className="cart--message">{cart.message}</p>}
               </div>
             )}
           </div>
@@ -133,23 +124,23 @@ const Cart = ({ data }) => {
         onClick={() => toggleCart(false)}
       />
     </>
-  )
-}
+  );
+};
 
 const CartItems = ({ items }) => {
   return (
     <div className="cart--items">
       {items.map((item) => {
-        return <CartItem key={item.id} item={item} />
+        return <CartItem key={item.id} item={item} />;
       })}
     </div>
-  )
-}
+  );
+};
 
 const EmptyCart = () => (
   <div className="cart--empty">
     <p>Your cart is empty</p>
   </div>
-)
+);
 
-export default Cart
+export default Cart;

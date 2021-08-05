@@ -1,15 +1,9 @@
-import React, { useState } from 'react'
-import { m } from 'framer-motion'
-import { useRouter } from 'next/router'
-
-import { getStaticRoute, getActive } from '@lib/routes'
-
-import CustomLink from '@components/link'
+import React, { useState } from 'react';
+import { m } from 'framer-motion';
+import CustomLink from '@components/link';
 
 const Dropdown = ({ id, title, items, onClick }) => {
-  const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
-
+  const [isOpen, setIsOpen] = useState(false);
   const dropdownAnim = {
     open: {
       opacity: 1,
@@ -19,7 +13,7 @@ const Dropdown = ({ id, title, items, onClick }) => {
       opacity: 0,
       height: 0,
     },
-  }
+  };
 
   return (
     <div className="dropdown">
@@ -42,23 +36,19 @@ const Dropdown = ({ id, title, items, onClick }) => {
       >
         <ul className="dropdown--nav">
           {items.map((item, key) => {
-            const isStatic = getStaticRoute(item.page?.type)
-            const isActive = getActive(isStatic, item.page?.slug, router)
-
+            // TODO: active tracking
+            let isActive = true;
             return (
               <li key={key} className={isActive ? 'is-active' : null}>
-                <CustomLink
-                  tabIndex={!isOpen ? -1 : null}
-                  link={item}
-                  onClick={onClick}
-                />
+                <h1>asdasd</h1>
+                <CustomLink tabIndex={!isOpen ? -1 : null} link={item} onClick={onClick} />
               </li>
-            )
+            );
           })}
         </ul>
       </m.div>
     </div>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;

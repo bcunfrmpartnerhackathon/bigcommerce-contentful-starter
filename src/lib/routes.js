@@ -9,11 +9,8 @@ export const getActive = (isStatic, pageSlug, router) => {
   }
 };
 
-export const getStaticRoute = (name) => {
-  switch (name) {
-    default:
-      return false;
-  }
+export const getStaticRoute = () => {
+  return false;
 };
 
 export const getDynamicRoute = (name) => {

@@ -6,7 +6,7 @@ import { ProductRecommendedProducts } from '@components/product/ProductRecommend
 import { ProductImageGallery } from '@components/product/ProductImageGallery';
 import { ProductDetailInfo } from '@components/product/ProductDetailInfo';
 import { ProductHero } from '@components/product/ProductHero';
-import Header from '@components/header';
+import Header from '@components/Header';
 import PromoBar from '@components/PromoBar';
 import { ProductCategoryHeader } from '@components/categories/ProductCategoryHeader';
 import { ProductCategoryList } from '@components/categories/ProductCategoryList';

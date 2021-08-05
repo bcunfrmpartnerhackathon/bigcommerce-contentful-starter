@@ -12,7 +12,6 @@ import Error from '@pages/404';
 import Layout from '@components/layout';
 
 import footerData from '@static-data/footer';
-import headerData from '@static-data/header';
 import productCountsData from '@static-data/productCounts';
 import globals from '@static-data/globals';
 
@@ -36,12 +35,7 @@ const pageData = {
       siteTitle: null,
     },
     footer: footerData,
-    header: headerData,
     productCounts: productCountsData,
-    cart: {
-      message: 'Free shipping on orders over $666',
-      storeURL: globals.siteUrl,
-    },
   },
 };
 
