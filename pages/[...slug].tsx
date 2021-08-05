@@ -521,7 +521,7 @@ export default function Home({
 
       {/* <h2>Raw layout data</h2>
       <pre>{JSON.stringify(layout, null, 2)}</pre> */}
-      <PreviewSwitch />
+      {/* <PreviewSwitch /> */}
     </Layout>
   );
 }

@@ -635,7 +635,7 @@ const ProductDetail = ({
   pageData: any;
 }) => {
   return (
-    <Layout site={pageData.site} page={pageData.page} schema={"Product"}>
+    <Layout site={pageData.site} page={pageData.page} schema={'Product'}>
       <Composition<ProductDetailProps> data={layout} resolveRenderer={resolveRendering}>
         {() => (
           <>
@@ -648,7 +648,7 @@ const ProductDetail = ({
       </Composition>
       {/* <h2>Raw layout data</h2>
     <pre>{JSON.stringify(layout, null, 2)}</pre> */}
-      <PreviewSwitch />
+      {/* <PreviewSwitch /> */}
     </Layout>
   );
 };
