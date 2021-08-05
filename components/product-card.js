@@ -3,8 +3,6 @@ import { m } from 'framer-motion';
 import Link from 'next/link';
 import cx from 'classnames';
 
-import { hasObject } from '@lib/helpers';
-
 import { ProductGallery, ProductThumbnail, ProductPrice, ProductOption } from '@components/product';
 
 const itemAnim = {
@@ -26,7 +24,6 @@ const itemAnim = {
 
 const ProductCard = ({
   product,
-  index,
   hasVisuals,
   showGallery,
   showThumbs,
@@ -36,27 +33,6 @@ const ProductCard = ({
   onClick,
 }) => {
   if (!product) return null;
-
-  // // find default variant for product
-  // const defaultVariant = product.variants?.find((v) => {
-  //   const option = {
-  //     name: product.options[0]?.name,
-  //     value: product.options[0]?.values[0],
-  //     position: product.options[0]?.position,
-  //   }
-  //   return hasObject(v.options, option)
-  // })
-
-  // // set active variant as default
-  // const [activeVariant, setActiveVariant] = useState(
-  //   defaultVariant ? defaultVariant : product.variants[0]
-  // )
-
-  // // assign the new variant when options are changed
-  // const changeActiveVariant = (id) => {
-  //   const newActiveVariant = product.variants.find((v) => v.id === id)
-  //   setActiveVariant(newActiveVariant)
-  // }
 
   return (
     <m.div variants={itemAnim} className={cx('product-card', className)}>

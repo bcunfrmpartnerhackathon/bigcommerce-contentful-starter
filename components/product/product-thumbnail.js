@@ -33,7 +33,7 @@ const ProductThumbnail = ({ thumbnails = [], activeVariant }) => {
       >
         <img
           src={thumbnails[0]}
-          srcsetSizes={[400, 800, 1000]}
+          // srcSet={[400, 800, 1000]}
           sizes="(min-width: 1200px) 33vw, (min-width: 768px) 50vw, 100vw"
           width={290}
           className="is-default"

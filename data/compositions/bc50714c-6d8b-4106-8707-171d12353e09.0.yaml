@@ -5,10 +5,20 @@ composition:
   _slug: /product-detail
   slots:
     content:
+      - type: productImageGallery
+        parameters: {}
       - type: productDetailInfo
+        parameters: {}
+    bottomRow:
+      - type: recommendedProducts
         parameters:
-          product:
-            type: bigcommerceProduct
-            value: '80'
+          productQuery:
+            type: bigcommerceProductQuery
+            value:
+              sort: name
+              brand: ''
+              count: 4
+              keyword: ''
+              categories: []
   parameters: {}
 state: 0

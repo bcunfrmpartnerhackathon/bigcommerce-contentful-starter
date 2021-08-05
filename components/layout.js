@@ -123,7 +123,7 @@ const Layout = ({ site = {}, page = {}, schema, children }) => {
         )}
       </Head>
 
-      <CookieBar data={site.cookieConsent} />
+      <CookieBar />
 
       <m.div initial="initial" animate="enter" exit="exit" variants={variants}>
         <Header data={site.header} isTransparent={page.hasTransparentHeader} />

@@ -1,23 +1,22 @@
 import React from 'react';
 
 import { ComponentProps } from '@uniformdev/upm-react';
-// import VideoLoop from '@components/vimeo-loop';
-import Photo from '@components/photo';
+import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';
+import { RichTextContent, Asset } from 'contentful';
 
-export function Hero({ component, ...otherProps }: ComponentProps) {
-  const { entry } = otherProps;
+export type HeroProps = ComponentProps<{
+  entry: ContentfulEnhancerResult<{
+    title: string;
+    text: RichTextContent;
+    backgroundDesktopPhoto: Asset;
+    backgroundMobilePhoto: Asset;
+  }>;
+}>;
+
+export function Hero({ entry }: HeroProps) {
+  // TODO: review this, TS doesn't like this
+  // @ts-ignore
   const { title, text, backgroundDesktopPhoto, backgroundMobilePhoto } = entry || {};
-
-  const backgroundDesktopPhotoObj = {
-    aspectRatio: 1,
-    customRatio: 0,
-    alt: 'hello',
-    lqip: backgroundDesktopPhoto.fields.file.url,
-    asset: {
-      altText: 'hello',
-    },
-  };
-  console.log({ entry });
 
   return (
     <section className="hero">
@@ -43,9 +42,9 @@ export function Hero({ component, ...otherProps }: ComponentProps) {
           <img
             src={backgroundDesktopPhoto.fields.file.url}
             width={1600}
-            srcsizes={[800, 1000, 1200, 1600]}
+            // srcsizes={[800, 1000, 1200, 1600]}
             sizes="100vw"
-            layout="fill"
+            // layout="fill"
             className="hero--bg"
           />
         )}
@@ -62,9 +61,3 @@ export function Hero({ component, ...otherProps }: ComponentProps) {
     </section>
   );
 }
-
-// {Object.entries(otherProps ?? {}).map(([k, v]) => (
-//   <li key={k}>
-//     {k}: <pre>{JSON.stringify(v, null, 2)}</pre>
-//   </li>
-// ))}

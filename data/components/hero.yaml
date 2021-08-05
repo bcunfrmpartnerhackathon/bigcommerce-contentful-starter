@@ -1,0 +1,18 @@
+id: hero
+name: Hero
+icon: awards
+parameters:
+  - id: entry
+    name: Entry
+    type: contentfulEntry
+    typeConfig:
+      required: true
+      allowedContentTypes:
+        hero:
+          id: hero
+          name: Hero
+slots: []
+titleParameter: entry
+canBeComposition: false
+created: '2021-08-03T17:34:23.550964+00:00'
+updated: '2021-08-03T17:34:33.134531+00:00'

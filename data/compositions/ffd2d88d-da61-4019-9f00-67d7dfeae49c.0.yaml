@@ -5,21 +5,32 @@ composition:
   _slug: /home
   slots:
     content:
-      - type: productCategories
+      - type: hero
         parameters:
-          productCategoryName:
-            type: text
-            value: Lamps
-          productCategoryCount:
-            type: text
-            value: '3'
-      - type: productCategories
+          entry:
+            type: contentfulEntry
+            value: 10hBh0rnXuWvt7WPgdJTov
+      - type: featuredProducts
         parameters:
-          productCategoryName:
+          speed:
             type: text
-            value: Armchairs
-          productCategoryCount:
-            type: text
-            value: '3'
+            value: '1'
+          reverse:
+            type: checkbox
+            value: true
+          pausable:
+            type: checkbox
+            value: true
+          products:
+            type: bigcommerceProductList
+            value:
+              - '80'
+              - '88'
+              - '97'
+      - type: callToAction
+        parameters:
+          entry:
+            type: contentfulEntry
+            value: 5pGWb02QleeEpScVK3DtIW
   parameters: {}
 state: 0

@@ -11,7 +11,7 @@ const Footer = ({ data = {} }) => {
   return (
     <footer className="footer" role="contentinfo">
       <div className="footer--grid">
-        {blocks.map((block, key) => (
+        {blocks && blocks.map((block, key) => (
           <div key={key} className="footer--block">
             {block.title && <p className="is-h3">{block.title}</p>}
 

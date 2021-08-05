@@ -3,27 +3,22 @@ import { Marqy } from 'marqy';
 import ProductCard from '@components/product-card';
 import { ProductResult } from '@uniformdev/upm-bigcommerce';
 
-import { ComponentProps } from '@uniformdev/upm-react';
-
-export type FeaturedProductsProps = ComponentProps<{
-  pausable: boolean;
-  reverse: boolean;
-  speed: string;
-  products: ProductResult[];
-}>;
-
-export function FeaturedProducts({ products, speed, reverse, pausable }: FeaturedProductsProps) {
-  if (!products?.length) return null;
-
+export const ProductRecommendedProducts = ({
+  product,
+  productQuery,
+}: {
+  product: ProductResult | undefined;
+  productQuery: ProductResult[];
+}) => {
   return (
     <>
       <div className="marquee-section">
-        <Marqy speed={parseInt(speed)} direction={reverse ? 'right' : 'left'} pauseOnHover={false}>
+        <Marqy speed={0} direction={'right'} pauseOnHover={false}>
           <div className="marquee--item">
-            {products.map((product: any, key: number) => {
+            {productQuery.map((product: any, key: number) => {
               return (
                 <span key={key} className="marquee--text">
-                  Featured Products
+                  Recommended Products
                 </span>
               );
             })}
@@ -32,13 +27,9 @@ export function FeaturedProducts({ products, speed, reverse, pausable }: Feature
       </div>
 
       <div className="marquee-section">
-        <Marqy
-          speed={parseInt(speed)}
-          direction={reverse ? 'right' : 'left'}
-          pauseOnHover={pausable}
-        >
+        <Marqy speed={0} direction={'right'} pauseOnHover={false}>
           <div className="marquee--item">
-            {products.map((product: any, key: number) => {
+            {productQuery.map((product: any, key: number) => {
               return (
                 <div key={key} className="marquee--product">
                   {/* @ts-ignore */}
@@ -51,4 +42,4 @@ export function FeaturedProducts({ products, speed, reverse, pausable }: Feature
       </div>
     </>
   );
-}
+};

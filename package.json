@@ -28,6 +28,7 @@
     "@uniformdev/optimize-edge-cloudflare": "9.0.2-alpha.32",
     "@uniformdev/optimize-tracker-common": "9.0.2-alpha.32",
     "@uniformdev/optimize-tracker-react": "9.0.2-alpha.32",
+    "@uniformdev/upm": "^9.0.2-alpha.33",
     "@uniformdev/upm-bigcommerce": "9.0.2-alpha.32",
     "@uniformdev/upm-contentful": "9.0.2-alpha.32",
     "@uniformdev/upm-react": "9.0.2-alpha.32",

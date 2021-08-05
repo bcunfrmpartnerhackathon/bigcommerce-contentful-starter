@@ -1,12 +1,22 @@
 import React from 'react';
-
+import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';
 import { ComponentProps } from '@uniformdev/upm-react';
-import Photo from '@components/photo';
+import { RichTextContent, Asset } from 'contentful';
 
-export function CallToAction({ component, ...otherProps }: ComponentProps) {
-  const { entry } = otherProps;
+export type CallToActionProps = ComponentProps<{
+  entry: ContentfulEnhancerResult<{
+    title: string;
+    text: RichTextContent;
+    image: Asset;
+    ctaTitle: string;
+    ctaLink: string;
+  }>;
+}>;
+
+export function CallToAction({ entry }: CallToActionProps) {
+  // TODO: review this, TS doesn't like this
+  // @ts-ignore
   const { title, text, image, ctaTitle, ctaLink } = entry || {};
-  console.log({ entry });
 
   return (
     <section className="section">
@@ -21,7 +31,7 @@ export function CallToAction({ component, ...otherProps }: ComponentProps) {
                       sizes="(min-width: 940px) 50vw, 100vw"
                       alt="Person wearing the red American Towers tee at night"
                       className="object-cover is-loaded"
-                      src={image.fields.file.url}
+                      src={image?.fields.file.url}
                     />
                   </picture>
                 </div>
@@ -32,11 +42,13 @@ export function CallToAction({ component, ...otherProps }: ComponentProps) {
             <div className="rc max-w-lg text-center">
               <h2>{title}</h2>
               <p>{text}</p>
-              <p>
-                <a className="btn is-large" href={ctaLink}>
-                  {ctaTitle}
-                </a>
-              </p>
+              {ctaLink && (
+                <p>
+                  <a className="btn is-large" href={ctaLink}>
+                    {ctaTitle}
+                  </a>
+                </p>
+              )}
             </div>
           </div>
         </div>

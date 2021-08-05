@@ -1,19 +1,30 @@
-import React from 'react'
-import { useRouter } from 'next/router'
+import React from 'react';
+import { useRouter } from 'next/router';
 
-import { ConditionalWrapper } from '@lib/helpers'
+import { ConditionalWrapper } from '@lib/helpers';
 
-import CustomLink from '@components/link'
+import CustomLink from '@components/link';
 
-const PromoBar = React.memo(({ data = {} }) => {
-  const { text, link, display } = data
-  const router = useRouter()
+const data = {
+  display: 'all',
+  link: {
+    isHome: false,
+    isShop: true,
+    slug: 'all',
+    type: 'collection',
+  },
+  text: 'Free shipping on all orders!',
+};
+
+const PromoBar = React.memo(() => {
+  const { text, link, display } = data;
+  const router = useRouter();
 
   // bail if no display or text
-  if (!display || !display.trim() || !text) return null
+  if (!display || !display.trim() || !text) return null;
 
   // bail if display set to homepage and we're not on the homepage
-  if (display === 'home' && router.asPath !== '/') return null
+  if (display === 'home' && router.asPath !== '/') return null;
 
   return (
     <div className="promo-bar is-inverted">
@@ -21,10 +32,7 @@ const PromoBar = React.memo(({ data = {} }) => {
         <ConditionalWrapper
           condition={link}
           wrapper={(children) => (
-            <CustomLink
-              className="promo-bar--link"
-              link={{ ...{ page: link } }}
-            >
+            <CustomLink className="promo-bar--link" link={{ ...{ page: link } }}>
               {children}
             </CustomLink>
           )}
@@ -33,7 +41,7 @@ const PromoBar = React.memo(({ data = {} }) => {
         </ConditionalWrapper>
       </div>
     </div>
-  )
-})
+  );
+});
 
-export default PromoBar
+export default PromoBar;

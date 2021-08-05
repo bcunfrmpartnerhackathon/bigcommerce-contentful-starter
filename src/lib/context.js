@@ -24,7 +24,7 @@ const initialContext = {
       },
     },
   },
-  isLoading: true,
+  isLoading: false,
   isAdding: false,
   isUpdating: false,
   isCartOpen: false,
@@ -219,6 +219,7 @@ function useAddItem() {
   } = useContext(SiteContext);
 
   async function addItem(variantID, quantity, attributes) {
+    console.log('addItem', { variantID });
     // Bail if no ID or quantity given
     if (!variantID || !quantity) return;
 
@@ -229,7 +230,7 @@ function useAddItem() {
 
     // build encoded variantID
     const enc = new Base64();
-    const variant = enc.urlEncode(`${variantGID}${variantID}`);
+    const variant = enc.urlEncode(`${variantID}`);
 
     // Build the cart line item
     const newItem = {
@@ -327,6 +328,9 @@ function useProductCount() {
   } = useContext(SiteContext);
 
   function productCount(collection) {
+    if (!productCounts) {
+      return 0;
+    }
     const collectionItem = productCounts.find((c) => c.slug === collection);
     return collectionItem.count;
   }

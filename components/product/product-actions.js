@@ -1,26 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-import {
-  ProductCounter,
-  ProductAdd,
-  ProductWaitlist,
-} from '@components/product'
+import { ProductCounter, ProductAdd } from '@components/product';
 
-const ProductActions = ({ activeVariant, klaviyoAccountID }) => {
+const ProductActions = ({ product }) => {
   // set default quantity
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1);
 
   return (
     <div className="product--actions">
-      {activeVariant?.inStock ? (
+      {/* TODO: add stock check */}
+      {true ? (
         <>
-          <ProductCounter
-            id={activeVariant.id}
-            max={10}
-            onUpdate={setQuantity}
-          />
+          <ProductCounter id={product.id} max={10} onUpdate={setQuantity} />
           <ProductAdd
-            productID={activeVariant.id}
+            productID={product.id}
             quantity={quantity}
             className="btn is-primary is-large is-block"
           >
@@ -29,20 +22,11 @@ const ProductActions = ({ activeVariant, klaviyoAccountID }) => {
         </>
       ) : (
         <>
-          {klaviyoAccountID ? (
-            <ProductWaitlist
-              variant={activeVariant.id}
-              klaviyo={klaviyoAccountID}
-            />
-          ) : (
-            <div className="btn is-large is-disabled is-block">
-              Out of Stock
-            </div>
-          )}
+          <div className="btn is-large is-disabled is-block">Out of Stock</div>
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProductActions
+export default ProductActions;

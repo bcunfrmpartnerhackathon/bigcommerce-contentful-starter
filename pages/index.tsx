@@ -1,47 +1,642 @@
-import { GetStaticProps } from 'next';
-import Head from 'next/head';
-import Link from 'next/link';
-import { upmClient } from 'src/lib/upmClient';
+import React, { ComponentType } from 'react';
+import { useRouter } from 'next/router';
 
-type ListProps = { paths: Array<{ id?: string; slug: string; name?: string }> };
+import { GetStaticPropsContext } from 'next';
+import { ComponentInstance, RootComponentInstance } from '@uniformdev/upm';
+import { ComponentProps, Composition, Slot } from '@uniformdev/upm-react';
+import { PreviewSwitch } from 'components/PreviewSwitch';
+import { useLivePreviewNextStaticProps } from 'src/hooks/useLivePreviewNextStaticProps';
+import { Visualizer } from 'components/Visualizer';
+import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';
+import { upmClient } from '@lib/upmClient';
+import { ProductDetail } from 'components/ProductDetail';
+import { ProductCategories } from 'components/ProductCategories';
+import { enhancers } from '@lib/enhancers';
+import { enhance } from '@uniformdev/upm';
+import { Hero } from '@components/Hero';
+import { FeaturedProducts } from '@components/FeaturedProducts';
+import { CallToAction } from '@components/CallToAction';
+import Error from '@pages/404';
+import Layout from '@components/layout';
 
-export default function Home({ paths }: ListProps) {
+const pageData = {
+  page: {
+    hasTransparentHeader: true,
+    seo: {
+      _type: 'seo',
+      metaTitle: 'BigCommerce Uniform Demo',
+      shareTitle: 'BigCommerce Uniform Demo',
+    },
+  },
+  site: {
+    cart: {
+      message: 'Free shipping on all orders!',
+      storeURL: 'https://bcunfrmhackathon.netlify.app',
+    },
+    footer: {
+      blocks: [
+        {
+          newsletter: {
+            errorMsg: [
+              {
+                _key: '64179e09d674',
+                _type: 'block',
+                children: [
+                  {
+                    _key: '286d3a76aa91',
+                    _type: 'span',
+                    marks: [],
+                    text: 'Whoops!',
+                  },
+                ],
+                markDefs: [],
+                style: 'h4mock',
+              },
+              {
+                _key: '1c9d1861e112',
+                _type: 'block',
+                children: [
+                  {
+                    _key: 'ff2c3683a755',
+                    _type: 'span',
+                    marks: [],
+                    text: "That didn't work.",
+                  },
+                ],
+                markDefs: [],
+                style: 'normal',
+              },
+            ],
+            id: 'footer',
+            klaviyoListID: 'Rf2jXC',
+            submit: null,
+            successMsg: [
+              {
+                _key: '2520597a859c',
+                _type: 'block',
+                children: [
+                  {
+                    _key: '437e9bb9c40d',
+                    _type: 'span',
+                    marks: [],
+                    text: 'Awesome!',
+                  },
+                ],
+                markDefs: [],
+                style: 'h4mock',
+              },
+              {
+                _key: '57156bf236e3',
+                _type: 'block',
+                children: [
+                  {
+                    _key: '37fb6554bd09',
+                    _type: 'span',
+                    marks: [],
+                    text: "You're all set.",
+                  },
+                ],
+                markDefs: [],
+                style: 'normal',
+              },
+            ],
+            terms: [
+              {
+                _key: 'e4d9bb95cb67',
+                _type: 'block',
+                children: [
+                  {
+                    _key: 'ecbd33bdbb92',
+                    _type: 'span',
+                    marks: [],
+                    text: 'I agree to the ',
+                  },
+                  {
+                    _key: 'a46fcd5c722d',
+                    _type: 'span',
+                    marks: ['d5f2093b796d'],
+                    text: 'terms',
+                  },
+                ],
+                markDefs: [
+                  {
+                    _key: 'd5f2093b796d',
+                    _type: 'link',
+                    isButton: null,
+                    page: {
+                      isHome: false,
+                      isShop: false,
+                      slug: 'terms',
+                      type: 'page',
+                    },
+                    styles: null,
+                    url: null,
+                  },
+                ],
+                style: 'normal',
+              },
+            ],
+          },
+          title: 'Newsletter',
+        },
+        {
+          menu: {
+            items: [
+              {
+                _key: '7beeb47d305a',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: true,
+                  slug: 'all',
+                  type: 'collection',
+                },
+                title: 'Everything',
+                url: null,
+              },
+              {
+                _key: '96e10f3709e0',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'vinyls',
+                  type: 'collection',
+                },
+                title: 'Vinyls',
+                url: null,
+              },
+              {
+                _key: '2a5a2ccb763d',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'apparel',
+                  type: 'collection',
+                },
+                title: 'Apparel',
+                url: null,
+              },
+              {
+                _key: 'befeb2b3fd0f',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'posters',
+                  type: 'collection',
+                },
+                title: 'Posters',
+                url: null,
+              },
+            ],
+          },
+          title: 'Shop',
+        },
+        {
+          menu: {
+            items: [
+              {
+                _key: 'a9bb51208d83',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'about',
+                  type: 'page',
+                },
+                title: 'Our Story',
+                url: null,
+              },
+              {
+                _key: '1df2681971e9',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'faq',
+                  type: 'page',
+                },
+                title: 'FAQ',
+                url: null,
+              },
+              {
+                _key: 'fc8280c8f6a1',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'returns',
+                  type: 'page',
+                },
+                title: 'Returns',
+                url: null,
+              },
+              {
+                _key: '63c0facf831c',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'terms',
+                  type: 'page',
+                },
+                title: 'Terms of Service',
+                url: null,
+              },
+              {
+                _key: '21ecb91c73b1',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'privacy',
+                  type: 'page',
+                },
+                title: 'Privacy Policy',
+                url: null,
+              },
+            ],
+          },
+          title: 'Info',
+        },
+        {
+          social: [
+            {
+              icon: 'Github',
+              url: 'https://github.com/uniformdev/bigcommerce-contentful-starter',
+            },
+          ],
+          title: 'Get Social',
+        },
+      ],
+    },
+    header: {
+      menuDesktopLeft: {
+        items: [
+          {
+            _key: 'f9c35d6c8871',
+            _type: 'navDropdown',
+            dropdownItems: [
+              {
+                _key: '7c2066f487c2',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: true,
+                  slug: 'all',
+                  type: 'collection',
+                },
+                title: 'Everything',
+                url: null,
+              },
+              {
+                _key: '19c395707461',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'vinyls',
+                  type: 'collection',
+                },
+                title: 'Vinyls',
+                url: null,
+              },
+              {
+                _key: 'cd732f194034',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'apparel',
+                  type: 'collection',
+                },
+                title: 'Apparel',
+                url: null,
+              },
+              {
+                _key: 'eba12c55aa75',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'posters',
+                  type: 'collection',
+                },
+                title: 'Posters',
+                url: null,
+              },
+            ],
+            featured: [],
+            page: null,
+            title: 'Shop',
+            url: null,
+          },
+          {
+            _key: '7dc55bcc35cc',
+            _type: 'navDropdown',
+            dropdownItems: [
+              {
+                _key: '2caa859cbbff',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'about',
+                  type: 'page',
+                },
+                title: 'Our Story',
+                url: null,
+              },
+              {
+                _key: '3c1adccf05a0',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'faq',
+                  type: 'page',
+                },
+                title: 'FAQ',
+                url: null,
+              },
+            ],
+            featured: null,
+            page: null,
+            title: 'Info',
+            url: null,
+          },
+        ],
+      },
+      menuDesktopRight: {
+        items: [
+          {
+            _key: 'dacf4cf2d342',
+            _type: 'navLink',
+            dropdownItems: null,
+            featured: null,
+            page: null,
+            title: 'Account',
+            url: 'https://bcunfrmhackathon.netlify.app/account',
+          },
+        ],
+      },
+      menuMobilePrimary: {
+        items: [
+          {
+            _key: '6a54b210606b',
+            _type: 'navDropdown',
+            dropdownItems: [
+              {
+                _key: 'e86995f9e1a4',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: true,
+                  slug: 'all',
+                  type: 'collection',
+                },
+                title: 'Everything',
+                url: null,
+              },
+              {
+                _key: '36a795dbbbd8',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'vinyls',
+                  type: 'collection',
+                },
+                title: 'Vinyls',
+                url: null,
+              },
+              {
+                _key: '4fbea253fe59',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'apparel',
+                  type: 'collection',
+                },
+                title: 'Apparel',
+                url: null,
+              },
+              {
+                _key: '03faae9b8c4f',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'posters',
+                  type: 'collection',
+                },
+                title: 'Posters',
+                url: null,
+              },
+            ],
+            page: null,
+            title: 'Shop',
+            url: null,
+          },
+          {
+            _key: 'afd532ddb642',
+            _type: 'navDropdown',
+            dropdownItems: [
+              {
+                _key: 'da719f8775e6',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'about',
+                  type: 'page',
+                },
+                title: 'Our Story',
+                url: null,
+              },
+              {
+                _key: '3bc8ab75006a',
+                _type: 'navPage',
+                page: {
+                  isHome: false,
+                  isShop: false,
+                  slug: 'faq',
+                  type: 'page',
+                },
+                title: 'FAQ',
+                url: null,
+              },
+            ],
+            page: null,
+            title: 'Info',
+            url: null,
+          },
+        ],
+      },
+      menuMobileSecondary: {
+        items: [
+          {
+            _key: 'dae349e6efe3',
+            _type: 'navLink',
+            dropdownItems: null,
+            page: null,
+            title: 'Account',
+            url: '/account/login',
+          },
+          {
+            _key: '7f3365c29468',
+            _type: 'navPage',
+            dropdownItems: null,
+            page: {
+              isHome: false,
+              isShop: false,
+              slug: 'terms',
+              type: 'page',
+            },
+            title: 'Terms of Service',
+            url: null,
+          },
+          {
+            _key: 'd735a6a7cd1e',
+            _type: 'navPage',
+            dropdownItems: null,
+            page: {
+              isHome: false,
+              isShop: false,
+              slug: 'privacy',
+              type: 'page',
+            },
+            title: 'Privacy Policy',
+            url: null,
+          },
+        ],
+      },
+    },
+    productCounts: [
+      {
+        count: 13,
+        slug: 'all',
+      },
+      {
+        count: 3,
+        slug: 'apparel',
+      },
+      {
+        count: 6,
+        slug: 'vinyls',
+      },
+      {
+        count: 4,
+        slug: 'posters',
+      },
+      {
+        count: 13,
+        slug: 'all',
+      },
+    ],
+    rootDomain: 'https://bcunfrmhackathon.netlify.app',
+    seo: {
+      metaDesc: 'Headless commerce starter powered by BigCommerce + Uniform + Next.js + Contentful',
+      metaTitle: '{{page_title}} – {{site_title}}',
+      shareDesc: 'Headless starter powered by BigCommerce + Uniform + Next.js + Contentful',
+      shareGraphic: {
+        _type: 'image',
+        asset: {
+          _ref: 'image-1411f962d6c07b14139098ad770db223aaf1226c-1200x630-png',
+          _type: 'reference',
+        },
+      },
+      shareTitle: '{{page_title}} – {{site_title}}',
+      siteTitle: null,
+    },
+  },
+};
+
+function resolveRendering(component: ComponentInstance): ComponentType<ComponentProps<any>> | null {
+  switch (component.type) {
+    case 'callToAction':
+      return CallToAction;
+    case 'hero':
+      return Hero;
+    case 'featuredProducts':
+      return FeaturedProducts;
+    case 'productCategories':
+      return ProductCategories;
+    case 'productDetail':
+      return ProductDetail;
+    default:
+      return Visualizer;
+  }
+}
+
+type PageProps = {
+  entry: ContentfulEnhancerResult<{ title: string }>;
+};
+
+type PageSlots = 'content';
+
+export default function Home({
+  pageData,
+  preview,
+  layout,
+}: {
+  preview?: string;
+  layout: RootComponentInstance;
+  pageData: any;
+}) {
+  useLivePreviewNextStaticProps({
+    compositionId: layout?._id,
+    projectId: preview,
+  });
+
+  const router = useRouter();
+
+  if (!router.isFallback && !pageData) {
+    return <Error data={pageData} statusCode={404} />;
+  }
+
+  const { site, page } = pageData;
+
   return (
-    <div>
-      <Head>
-        <title>Home</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <ul>
-        {paths.map((path) => (
-          <li key={path.id}>
-            {path.slug ? (
-              <Link href={path.slug}>
-                <a>{path.name ?? path.slug}</a>
-              </Link>
-            ) : (
-              <>{path.name} (no slug)</>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Layout site={site} page={page} schema={undefined}>
+      <Composition<PageProps> data={layout} resolveRenderer={resolveRendering}>
+        {({ entry }) => (
+          <main>
+            <h1>{entry?.fields.title}</h1>
+            <Slot<PageSlots> name="content" />
+          </main>
+        )}
+      </Composition>
+
+      {/* <h2>Raw layout data</h2>
+      <pre>{JSON.stringify(layout, null, 2)}</pre> */}
+      <PreviewSwitch />
+    </Layout>
   );
 }
 
-export const getStaticProps: GetStaticProps<ListProps> = async () => {
-  const pages = await upmClient.getCompositionList();
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const slug = context?.params?.slug ?? '';
+  const { preview } = context;
+
+  // fetch the layout from the UPM enhancer proxy
+  const apiResult = await upmClient.getCompositionBySlug({
+    slug: `/home`,
+    state: preview ? 'preview' : 'published',
+    skipEnhance: false,
+  });
+
+  await enhance({ composition: apiResult.composition, enhancers, context: { preview } });
 
   return {
     props: {
-      paths: pages.compositions
-        .filter((comp) => comp.composition._slug)
-        .map((comp) => ({
-          id: comp.composition._id,
-          slug: comp.composition._slug!,
-          name: comp.composition._name,
-        })),
-      fallback: false,
+      layout: apiResult.composition,
+      pageData,
+      // keeping the site ID in a static prop lets us hide it from non-preview users
+      preview: preview ? '4553de09-49ff-49a1-806e-754f37357359' : null,
     },
   };
-};
+}

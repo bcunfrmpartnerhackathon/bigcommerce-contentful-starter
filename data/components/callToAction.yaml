@@ -1,0 +1,18 @@
+id: callToAction
+name: Call To Action
+icon: screen
+parameters:
+  - id: entry
+    name: Entry
+    type: contentfulEntry
+    typeConfig:
+      required: true
+      allowedContentTypes:
+        callToAction:
+          id: callToAction
+          name: Call to Action
+slots: []
+titleParameter: entry
+canBeComposition: false
+created: '2021-08-04T20:39:45.784898+00:00'
+updated: '2021-08-04T20:39:52.998452+00:00'

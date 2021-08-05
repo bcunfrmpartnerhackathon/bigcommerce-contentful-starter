@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { AnimatePresence, m } from 'framer-motion'
-import FocusTrap from 'focus-trap-react'
-import Cookies from 'js-cookie'
+import React, { useEffect, useState } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
+import FocusTrap from 'focus-trap-react';
+import Cookies from 'js-cookie';
 
-import { useHasMounted } from '@lib/helpers'
+import { useHasMounted } from '@lib/helpers';
 
-import CustomLink from '@components/link'
+import CustomLink from '@components/link';
 
 const barAnim = {
   show: {
@@ -22,17 +22,27 @@ const barAnim = {
       ease: [0.16, 1, 0.3, 1],
     },
   },
-}
+};
 
-const CookieBar = React.memo(({ data = {} }) => {
-  const { enabled, message, link } = data
+const data = {
+  enabled: true,
+  link: {
+    slug: 'privacy',
+    type: 'page',
+  },
+  message:
+    'We use cookies to personalize and deliver appropriate content.\nBy clicking "Accept" you agree to our terms.',
+};
 
-  if (!enabled) return null
+const CookieBar = React.memo(() => {
+  const { enabled, message, link } = data;
 
-  const hasMounted = useHasMounted()
-  const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
+  if (!enabled) return null;
 
-  if (!hasMounted || !message) return null
+  const hasMounted = useHasMounted();
+  const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
+
+  if (!hasMounted || !message) return null;
 
   return (
     <AnimatePresence>
@@ -57,7 +67,7 @@ const CookieBar = React.memo(({ data = {} }) => {
                         {text}
                         {message.split('\n')[i + 1] && <br />}
                       </React.Fragment>
-                    )
+                    );
                   })}
                 </p>
               </div>
@@ -69,10 +79,7 @@ const CookieBar = React.memo(({ data = {} }) => {
                     link={{ ...{ page: link }, ...{ title: 'Learn More' } }}
                   />
                 )}
-                <button
-                  onClick={() => onAcceptCookies()}
-                  className="btn is-primary"
-                >
+                <button onClick={() => onAcceptCookies()} className="btn is-primary">
                   Accept
                 </button>
               </div>
@@ -81,27 +88,27 @@ const CookieBar = React.memo(({ data = {} }) => {
         </FocusTrap>
       )}
     </AnimatePresence>
-  )
-})
+  );
+});
 
 function useAcceptCookies(cookieName = 'accept_cookies') {
-  const [acceptedCookies, setAcceptedCookies] = useState(true)
+  const [acceptedCookies, setAcceptedCookies] = useState(true);
 
   useEffect(() => {
     if (!Cookies.get(cookieName)) {
-      setAcceptedCookies(false)
+      setAcceptedCookies(false);
     }
-  }, [])
+  }, []);
 
   const acceptCookies = () => {
-    setAcceptedCookies(true)
-    Cookies.set(cookieName, 'accepted', { expires: 365 })
-  }
+    setAcceptedCookies(true);
+    Cookies.set(cookieName, 'accepted', { expires: 365 });
+  };
 
   return {
     acceptedCookies,
     onAcceptCookies: acceptCookies,
-  }
+  };
 }
 
-export default CookieBar
+export default CookieBar;
