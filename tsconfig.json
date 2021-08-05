@@ -11,6 +11,7 @@
       "@lib/*": ["src/lib/*"],
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
+      "@static-data/*": ["static-data/*"],
     },
     "allowJs": true,
     "skipLibCheck": true,

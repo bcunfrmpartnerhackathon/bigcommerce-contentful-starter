@@ -66,7 +66,6 @@ const ProductHero = ({ product, activeVariant, onVariantChange }) => {
 
           <ProductActions
             activeVariant={activeVariant}
-            klaviyoAccountID={product.klaviyoAccountID}
           />
         </div>
       </div>

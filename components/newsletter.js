@@ -10,7 +10,7 @@ import Icon from '@components/icon'
 
 const Newsletter = ({ data = {} }) => {
   // Extract our module data
-  const { id, klaviyoListID, terms, submit, successMsg, errorMsg } = data
+  const { id, terms, submit, successMsg, errorMsg } = data
 
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -38,20 +38,15 @@ const Newsletter = ({ data = {} }) => {
   const onSubmit = (data, e) => {
     e.preventDefault()
 
-    // set an error if there's no Klaviyo list supplied...
-    if (!klaviyoListID) setError(true)
-
-    // ...and bail out if terms active and not agreed to (or just Klaviyo list is missing)
-    if ((!hasAgreed && terms && !klaviyoListID) || !klaviyoListID) return
+    if (!hasAgreed && terms) return
 
     setSubmitting(true)
     setError(false)
 
-    fetch('/api/klaviyo/newsletter-join', {
+    fetch('/api/newsletter-join', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        listID: klaviyoListID,
         ...data,
       }),
     })
