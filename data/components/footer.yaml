@@ -1,0 +1,16 @@
+id: footer
+name: Footer
+icon: screen
+parameters: []
+slots:
+  - id: footer
+    name: Footer
+    maxComponents: 3
+    allowedComponents:
+      - footerNewsletterBlock
+      - footerLinksBlock
+    inheritAllowedComponents: false
+titleParameter: ''
+canBeComposition: false
+created: '2021-08-05T19:24:26.911824+00:00'
+updated: '2021-08-05T19:25:34.815721+00:00'

@@ -1,0 +1,28 @@
+id: header
+name: Header
+icon: screen
+parameters:
+  - id: entry
+    name: Entry
+    type: contentfulEntry
+    typeConfig:
+      required: true
+      allowedContentTypes:
+        header:
+          id: header
+          name: Header
+  - id: isTransparent
+    name: Is Transparent?
+    type: checkbox
+    typeConfig: null
+slots:
+  - id: headerTop
+    name: Header Top
+    maxComponents: 1
+    allowedComponents:
+      - promoBar
+    inheritAllowedComponents: false
+titleParameter: entry
+canBeComposition: false
+created: '2021-08-05T14:17:21.723942+00:00'
+updated: '2021-08-05T17:16:04.47584+00:00'

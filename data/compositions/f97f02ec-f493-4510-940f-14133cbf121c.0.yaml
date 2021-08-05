@@ -1,18 +1,18 @@
 composition:
-  _id: ffd2d88d-da61-4019-9f00-67d7dfeae49c
-  type: home
-  _name: 🏠 Home
-  _slug: /home
+  _id: f97f02ec-f493-4510-940f-14133cbf121c
+  type: productCategoryPage
+  _name: Global Product Category
+  _slug: /product-category
   slots:
     footer:
       - type: footer
         slots:
           footer:
-            - type: footerNewsletterBlock
+            - type: footerLinksBlock
               parameters:
                 entry:
                   type: contentfulEntry
-                  value: 5ZpTZwhtNgoGgdG6zJDTgk
+                  value: 2uVDTLE5OmHnriF7XM5tfi
             - type: footerLinksBlock
               parameters:
                 entry:
@@ -32,41 +32,26 @@ composition:
               parameters:
                 entry:
                   type: contentfulEntry
-                  value: 1rXhY9FS1cTuY1bm1tiRgn
+                  value: 4T5PS87eW7AaJs96ymLnZe
         parameters:
           entry:
             type: contentfulEntry
             value: 6uAwB2FHWjhiMw6vTtIkm9
-          isTransparent:
-            type: checkbox
-            value: true
     content:
-      - type: hero
+      - type: productCategoryHeader
         parameters:
-          entry:
-            type: contentfulEntry
-            value: 10hBh0rnXuWvt7WPgdJTov
-      - type: featuredProducts
-        parameters:
-          speed:
+          text:
             type: text
-            value: '1'
-          reverse:
-            type: checkbox
-            value: true
-          pausable:
-            type: checkbox
-            value: true
-          products:
-            type: bigcommerceProductList
-            value:
-              - '80'
-              - '88'
-              - '97'
-      - type: callToAction
+            value: >-
+              Dolore ea veniam aute ullamco cillum mollit cupidatat. Labore
+              aliquip culpa cillum minim nulla aliquip.
+          title:
+            type: text
+            value: Shop our Catalog
+      - type: productCategoryList
         parameters:
-          entry:
-            type: contentfulEntry
-            value: 5pGWb02QleeEpScVK3DtIW
+          numberOrProductsToShow:
+            type: text
+            value: '3'
   parameters: {}
 state: 0

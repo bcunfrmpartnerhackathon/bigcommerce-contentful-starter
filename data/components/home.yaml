@@ -1,8 +1,14 @@
 id: home
-name: Home
-icon: home-alt
+name: Content Page
+icon: file-document
 parameters: []
 slots:
+  - id: header
+    name: Header
+    maxComponents: 1
+    allowedComponents:
+      - header
+    inheritAllowedComponents: false
   - id: content
     name: Content
     allowedComponents:
@@ -13,7 +19,13 @@ slots:
       - featuredProducts
       - callToAction
     inheritAllowedComponents: false
+  - id: footer
+    name: Footer
+    maxComponents: 1
+    allowedComponents:
+      - footer
+    inheritAllowedComponents: false
 titleParameter: ''
 canBeComposition: true
 created: '2021-08-03T02:22:22.614228+00:00'
-updated: '2021-08-04T20:39:51.239275+00:00'
+updated: '2021-08-05T19:26:05.164897+00:00'
