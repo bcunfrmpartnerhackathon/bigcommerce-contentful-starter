@@ -17,16 +17,8 @@ function CartItem({ item }) {
     updateItem(item.lineID, quantity)
   }
 
-  const defaultPhoto = item.photos.cart?.find((set) => !set.forOption)
-  const variantPhoto = item.photos.cart?.find((set) => {
-    const option = set.forOption
-      ? {
-          name: set.forOption.split(':')[0],
-          value: set.forOption.split(':')[1],
-        }
-      : {}
-    return option.value && hasObject(item.options, option)
-  })
+  const defaultPhoto = item.image_url
+  const variantPhoto = item.image_url
 
   const photos = variantPhoto ? variantPhoto : defaultPhoto
 
@@ -43,22 +35,22 @@ function CartItem({ item }) {
       <div className="cart-item--details">
         <div className="cart-item--header">
           <div className="cart-item--title">
-            <div className="cart-item--variant">{item.title}</div>
+            <div className="cart-item--variant">{item.name}</div>
             <h2 className="cart-item--name">
               <Link
-                href={`/products/${item.product.slug}?variant=${item.id}`}
+                href={`/products/${item.url}`}
                 scroll={false}
               >
                 <a
                   onClick={() => toggleCart(false)}
                   className="cart-item--link"
                 >
-                  {item.product.title}
+                  {item.name}
                 </a>
               </Link>
             </h2>
           </div>
-          <ProductPrice price={item.price} />
+          <ProductPrice price={item.list_price} />
         </div>
         <div className="cart-item--tools">
           <div className="cart-item--quantity">

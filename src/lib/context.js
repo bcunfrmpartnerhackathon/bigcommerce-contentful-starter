@@ -14,7 +14,8 @@ const initialContext = {
   bcClient: {
     checkout: {
       addLineItems: () => {
-        console.log('addLineItems');
+
+            console.log('addLineItems');
       },
       create: () => {
         console.log('create');
@@ -72,9 +73,9 @@ const setCheckoutState = async (checkout, setContext, openCart) => {
       isCartOpen: openCart ? true : prevState.isCartOpen,
       checkout: {
         id: checkout.id,
-        lineItems: lineItems,
-        subTotal: checkout.lineItemsSubtotalPrice,
-        webUrl: checkout.webUrl,
+        lineItems: checkout.line_items.physical_items,
+        subTotal: checkout.cart_amount,
+        // webUrl: checkout.webUrl,
       },
     };
   });
@@ -196,7 +197,8 @@ function useCartTotals() {
     context: { checkout },
   } = useContext(SiteContext);
 
-  const subTotal = checkout.subTotal ? checkout.subTotal.amount * 100 : false;
+  const subTotal = checkout.subTotal ? checkout.subTotal * 100 : false;
+
   return {
     subTotal,
   };
@@ -207,7 +209,6 @@ function useCartItems() {
   const {
     context: { checkout },
   } = useContext(SiteContext);
-
   return checkout.lineItems;
 }
 
@@ -230,7 +231,7 @@ function useAddItem() {
 
     // build encoded variantID
     const enc = new Base64();
-    const variant = enc.urlEncode(`${variantID}`);
+    const variant = { variantID }
 
     // Build the cart line item
     const newItem = {
@@ -239,12 +240,34 @@ function useAddItem() {
       customAttributes: attributes,
     };
 
-    // Add it to the checkout cart
-    const newCheckout = await bcClient.checkout.addLineItems(checkout.id, newItem);
 
-    // Update our global store states
-    setCheckoutState(newCheckout, setContext, true);
-  }
+        await fetch(`https://je8k1gjtlb.execute-api.us-east-1.amazonaws.com/dev/cart
+`, {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify({
+            line_items: [
+              {
+                quantity: 1,
+                product_id: newItem.variantId.variantID
+              }
+            ]
+          })
+        })
+          .then(async res => ({ response: await res.json(), status: res.status }))
+          .then(({ response, status }) => {
+console.log("response",response)
+
+            // const lineItems = response.data.line_items;
+            // Update our global store states
+            console.log("bc cart", response.data)
+            setCheckoutState(response.data, setContext, true);
+
+          })
+          .catch(error => {
+            console.log("error in cart",error )
+          });
+      };
 
   return addItem;
 }
@@ -308,10 +331,12 @@ function useCheckout() {
 
 // Toggle cart state
 function useToggleCart() {
+  console.log("open cart")
   const {
     context: { isCartOpen },
     setContext,
   } = useContext(SiteContext);
+  console.log("cart", { isCartOpen })
 
   async function toggleCart() {
     setContext((prevState) => {

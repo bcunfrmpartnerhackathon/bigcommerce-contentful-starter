@@ -19,14 +19,13 @@ import CartItem from '@components/cart-item'
 const Cart = ({ data }) => {
   const { cart } = data
 
-  if (!cart) return null
-
   const { isCartOpen, isUpdating } = useSiteContext()
   const { subTotal } = useCartTotals()
   const cartCount = useCartCount()
   const lineItems = useCartItems()
   const checkoutURL = useCheckout()
   const toggleCart = useToggleCart()
+
 
   const [hasFocus, setHasFocus] = useState(false)
   const [checkoutLink, setCheckoutLink] = useState(checkoutURL)
@@ -47,17 +46,17 @@ const Cart = ({ data }) => {
   }
 
   // update our checkout URL to use our custom domain name
-  useEffect(() => {
-    if (checkoutURL) {
-      const buildCheckoutLink = cart.storeURL
-        ? checkoutURL.replace(
-            /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/g,
-            cart.storeURL
-          )
-        : checkoutURL
-      setCheckoutLink(buildCheckoutLink)
-    }
-  }, [checkoutURL])
+  // useEffect(() => {
+  //   if (checkoutURL) {
+  //     const buildCheckoutLink = cart.storeURL
+  //       ? checkoutURL.replace(
+  //           /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)/g,
+  //           cart.storeURL
+  //         )
+  //       : checkoutURL
+  //     setCheckoutLink(buildCheckoutLink)
+  //   }
+  // }, [checkoutURL])
 
   return (
     <>
@@ -117,9 +116,6 @@ const Cart = ({ data }) => {
                   {isUpdating ? 'Updating...' : 'Checkout'}
                 </a>
 
-                {cart.message && (
-                  <p className="cart--message">{cart.message}</p>
-                )}
               </div>
             )}
           </div>
