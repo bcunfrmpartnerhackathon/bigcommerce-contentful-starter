@@ -47,7 +47,7 @@ export function Hero({ entry }: HeroProps) {
             width={800}
             height={533}
             layout="responsive"
-            loading="lazy"
+            loading="eager"
             className="hero--bg"
           />
         )}
