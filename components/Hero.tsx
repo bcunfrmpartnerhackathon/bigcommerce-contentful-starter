@@ -4,6 +4,9 @@ import { ComponentProps } from '@uniformdev/upm-react';
 import { ContentfulEnhancerResult } from '@uniformdev/upm-contentful';
 import { RichTextContent, Asset } from 'contentful';
 
+import { ImageLoader } from '@lib/ImageLoader';
+import Image from 'next/image';
+
 export type HeroProps = ComponentProps<{
   entry: ContentfulEnhancerResult<{
     title: string;
@@ -38,17 +41,16 @@ export function Hero({ entry }: HeroProps) {
 
       <>
         {backgroundDesktopPhoto && (
-          <img src={backgroundDesktopPhoto.fields.file.url} width={1600} className="hero--bg" />
-        )}
-        {/* {backgroundMobilePhoto && (
-          <img
-            src={backgroundMobilePhoto.fields.file.url}
+          <Image
+            loader={ImageLoader}
+            src={backgroundDesktopPhoto.fields.file.url}
             width={800}
-            srcsizes="100vw"
-            layout="fill"
-            className="hero--bg is-mobile"
+            height={533}
+            layout="responsive"
+            loading="lazy"
+            className="hero--bg"
           />
-        )} */}
+        )}
       </>
     </section>
   );
