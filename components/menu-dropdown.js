@@ -40,7 +40,6 @@ const Dropdown = ({ id, title, items, onClick }) => {
             let isActive = true;
             return (
               <li key={key} className={isActive ? 'is-active' : null}>
-                <h1>asdasd</h1>
                 <CustomLink tabIndex={!isOpen ? -1 : null} link={item} onClick={onClick} />
               </li>
             );

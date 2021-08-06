@@ -70,10 +70,15 @@ export default function Home({
 
   return (
     <Composition<PageProps> data={layout} resolveRenderer={resolveRenderer}>
-      {({ entry }) => (
-        <Layout header={<Slot name="header" />} footer={<Slot name="footer" />} site={site} page={page} schema={undefined}>
+      {() => (
+        <Layout
+          header={<Slot name="header" />}
+          footer={<Slot name="footer" />}
+          site={site}
+          page={page}
+          schema={undefined}
+        >
           <main>
-            <h1>{entry?.fields.title}</h1>
             <Slot name="content" />
           </main>
         </Layout>

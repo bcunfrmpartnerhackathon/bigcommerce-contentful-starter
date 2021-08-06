@@ -50,6 +50,7 @@
 /* Customize megadropdown navigation buttons: */
 /* (you should mostly offload these to the general header links/button styles) */
 .mega-toggle {
+  color: var(--pageText);
   &--icon {
     @apply inline-block mr-2 rounded-full border;
     width: 10px;

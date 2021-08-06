@@ -68,7 +68,7 @@ a[href="#content"].skip-link {
     @apply clean-btn block p-2 bg-transparent;
 
     svg {
-      @apply block fill-current w-auto h-12;
+      @apply block fill-current w-auto h-12 mt-6;
     }
   }
 }
@@ -87,7 +87,7 @@ a[href="#content"].skip-link {
 
 .hamburger {
   @apply relative flex flex-col items-center justify-center mx-auto w-7;
-
+  color: var(--black);
   &::before,
   &::after {
     @apply block relative w-full h-0 border-t;

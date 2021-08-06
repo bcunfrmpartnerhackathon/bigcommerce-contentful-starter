@@ -62,6 +62,7 @@ module.exports = {
       white: '#FFFFFF',
       pageBG: 'var(--pageBG)',
       pageText: 'var(--pageText)',
+      gray: '#696969',
     },
     screens: {
       xs: '480px',
