@@ -26,8 +26,8 @@ export function Hero({ entry }: HeroProps) {
       {title && (
         <div className="hero--overlay">
           <div className="hero--content">
-            <h1>{title}</h1>
-            <p>{text}</p>
+            <h1 className="hero--title">{title}</h1>
+            <p className="text-white">{text}</p>
             {linkUrl && linkTitle && (
               <p>
                 <a className="btn is-white is-large" href={linkUrl}>
