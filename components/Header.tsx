@@ -78,7 +78,7 @@ const Header = ({ entry, isTransparent }: HeaderProps) => {
                 ) : (
                   <Link href="/" scroll={false}>
                     <a className="logo--link" aria-label="Go Home">
-                      <Icon name="Logo" id="header" viewBox="0 0 315 75" />
+                      <Icon name="Logo" id="header" viewBox="0 0 500 150" />
                     </a>
                   </Link>
                 )}

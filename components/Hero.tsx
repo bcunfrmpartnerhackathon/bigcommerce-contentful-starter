@@ -39,19 +39,30 @@ export function Hero({ entry }: HeroProps) {
         </div>
       )}
 
-      <>
-        {backgroundDesktopPhoto && (
+      {backgroundDesktopPhoto && (
+        <div className="hero--imageContainer">
           <Image
             loader={ImageLoader}
             src={backgroundDesktopPhoto.fields.file.url}
-            width={800}
-            height={533}
-            layout="responsive"
+            layout="fill"
             loading="eager"
-            className="hero--bg"
+            sizes="100vw"
+            className="hero--image"
           />
-        )}
-      </>
+        </div>
+      )}
+
+      {/* TODO: enable mobile image */}
+      {/* {backgroundMobilePhoto && (
+        <Image
+          loader={ImageLoader}
+          src={backgroundMobilePhoto.fields.file.url}
+          loading="eager"
+          sizes="100vw"
+          layout="fill"
+          className="hero--bg is-mobile"
+        />
+      )} */}
     </section>
   );
 }
