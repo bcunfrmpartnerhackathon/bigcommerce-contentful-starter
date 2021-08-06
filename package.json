@@ -43,7 +43,7 @@
     "jsondiffpatch": "^0.4.1",
     "keen-slider": "^5.4.0",
     "marqy": "^0.0.8",
-    "next": "11.0.1",
+    "next": "^11.0.1",
     "next-themes": "^0.0.15",
     "nookies": "^2.5.2",
     "qs": "^6.10.1",
@@ -52,7 +52,7 @@
     "react-hook-form": "^7.10.1",
     "react-keyed-flatten-children": "^1.3.0",
     "swr": "^0.5.4",
-    "tailwindcss": "^2.0.2",
+    "tailwindcss": "^2.2.7",
     "use-intersection": "^0.2.1"
   },
   "devDependencies": {

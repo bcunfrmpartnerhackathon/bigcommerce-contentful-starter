@@ -20,6 +20,8 @@ module.exports = {
   },
   trailingSlash: true,
   images: {
+    loader: "default",
+    path: "https://images.ctfassets.net",
     domains: ['images.ctfassets.net'],
   },
 };
