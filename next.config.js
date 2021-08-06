@@ -9,7 +9,7 @@ module.exports = {
     presentationApiToken: process.env.UNIFORM_PRESENTATION_API_TOKEN,
     presentationProjectId: process.env.UNIFORM_PRESENTATION_PROJECT_ID,
     bigCommerceStoreHash: process.env.BIGCOMMERCE_STORE_HASH,
-    bigCommerceToken: process.env.BIGCOMMERCE_TOKEN
+    bigCommerceToken: process.env.BIGCOMMERCE_TOKEN,
   },
   publicRuntimeConfig: {
     gaTrackingId: process.env.GA_UA_ID,
@@ -18,5 +18,8 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  trailingSlash: true
+  trailingSlash: true,
+  images: {
+    domains: ['images.ctfassets.net'],
+  },
 };
