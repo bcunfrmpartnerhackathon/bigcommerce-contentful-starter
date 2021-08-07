@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { CSSProperties, useState, useRef } from 'react';
 import { m } from 'framer-motion';
 import FocusTrap from 'focus-trap-react';
 import { useIntersection } from 'use-intersection';
@@ -23,6 +23,10 @@ export type HeaderProps = ComponentProps<{
   }>;
   isTransparent: boolean;
 }>;
+
+export interface HeaderCSS extends CSSProperties {
+  '--headerHeight': string;
+}
 
 const Header = ({ entry, isTransparent }: HeaderProps) => {
   // @ts-ignore
@@ -50,6 +54,8 @@ const Header = ({ entry, isTransparent }: HeaderProps) => {
   const { meganav } = useSiteContext();
   const toggleMegaNav = useToggleMegaNav();
 
+  const headerStyle = headerRect ? { "--headerHeight" : `${headerRect.height}px` } : {} as React.CSSProperties;
+
   return (
     <>
       <a href="#content" className="skip-link">
@@ -76,7 +82,7 @@ const Header = ({ entry, isTransparent }: HeaderProps) => {
                     <Icon name="Logo" id="header" viewBox="0 0 500 150" />
                   </button>
                 ) : (
-                  <Link href="/" scroll={false}>
+                  <Link href="/" scroll={false} prefetch={false}>
                     <a className="logo--link" aria-label="Go Home">
                       <Icon name="Logo" id="header" viewBox="0 0 500 150" />
                     </a>
@@ -116,18 +122,17 @@ const Header = ({ entry, isTransparent }: HeaderProps) => {
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="menu-mobile"
                       >
-                        {/* @ts-ignore */}
-                        <div className="menu-mobile--inner" style={headerRect?.height ? { '--headerHeight': `${headerRect.height}px` } : undefined}>
+                        <div className="menu-mobile--inner" style={headerStyle as HeaderCSS}>
                           <div className="menu-mobile--primary">
                             {menuMobilePrimary && (
-                               //@ts-ignore
+                              //@ts-ignore
                               <Menu items={menuMobilePrimary} onClick={() => toggleMobileNav(false)} />
                             )}
                           </div>
 
                           <div className="menu-mobile--secondary">
                             {menuMobileSecondary && (
-                               //@ts-ignore
+                              //@ts-ignore
                               <Menu items={menuMobileSecondary} onClick={() => toggleMobileNav(false)} />
                             )}
                           </div>
