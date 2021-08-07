@@ -9,7 +9,7 @@
     "build": "run-s generate build:next",
     "build:next": "next build",
     "export": "next export",
-    "ci:build": "npm run generate && next build && next export",
+    "ci:build": "npm run generate && next build",
     "generate": "uniform optimize manifest download --output ./src/lib/intentManifest.json --apiKey $UNIFORM_API_KEY",
     "start": "next start",
     "dev": "run-s generate dev:next",
