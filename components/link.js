@@ -41,7 +41,7 @@ const Link = ({ link, children, ...rest }) => {
   // }
 
   return (
-    <NextLink href={link.page.slug} scroll={false}>
+    <NextLink href={link.page.slug} scroll={false} prefetch={false}>
       <a
         className={
           link.isButton

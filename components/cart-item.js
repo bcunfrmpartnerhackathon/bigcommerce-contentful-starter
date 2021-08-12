@@ -47,6 +47,7 @@ function CartItem({ item }) {
             <h2 className="cart-item--name">
               <Link
                 href={`/products/${item.product.slug}?variant=${item.id}`}
+                prefetch={false}
                 scroll={false}
               >
                 <a

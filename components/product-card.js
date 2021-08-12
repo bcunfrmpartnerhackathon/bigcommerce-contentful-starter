@@ -65,7 +65,7 @@ const ProductCard = ({
       <div className="product-card--details">
         <div className="product-card--header">
           <h2 className="product-card--title">
-            <Link href={`/products/${product.id}`} scroll={false}>
+            <Link href={`/products/${product.id}`} scroll={false} prefetch={false}>
               <a className="product-card--link" onClick={onClick}>
                 {product.title}
               </a>
