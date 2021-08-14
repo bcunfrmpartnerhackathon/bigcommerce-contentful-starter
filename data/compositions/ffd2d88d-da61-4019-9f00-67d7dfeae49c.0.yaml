@@ -1,7 +1,7 @@
 composition:
   _id: ffd2d88d-da61-4019-9f00-67d7dfeae49c
   type: home
-  _name: 🏠 Home
+  _name: 'Home 🏠 '
   _slug: /home
   slots:
     footer:
@@ -32,7 +32,7 @@ composition:
               parameters:
                 entry:
                   type: contentfulEntry
-                  value: 1rXhY9FS1cTuY1bm1tiRgn
+                  value: 4T5PS87eW7AaJs96ymLnZe
         parameters:
           entry:
             type: contentfulEntry
@@ -63,6 +63,7 @@ composition:
               - '80'
               - '88'
               - '97'
+              - '81'
       - type: callToAction
         parameters:
           entry:

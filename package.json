@@ -16,8 +16,8 @@
     "build:worker": "wrangler build",
     "dev:worker": "wrangler dev",
     "pull": "run-p pull:components pull:compositions",
-    "pull:components": "uniform presentation component pull ./upm/definitions",
-    "pull:compositions": "uniform presentation composition pull ./upm/compositions",
+    "pull:components": "uniform presentation component pull ./data/components",
+    "pull:compositions": "uniform presentation composition pull ./data/compositions",
     "push": "run-p push:components push:compositions",
     "push:components": "uniform presentation component push ./upm/definitions",
     "push:compositions": "uniform presentation composition push ./upm/compositions"

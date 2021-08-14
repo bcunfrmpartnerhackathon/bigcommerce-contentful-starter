@@ -1,7 +1,7 @@
 composition:
   _id: aeb90eec-72df-4cf7-9d0f-ae5d0f2897fc
   type: productDetail
-  _name: 🌎 Global Product Detail
+  _name: Global Product Detail 🌎
   _slug: /product-detail
   slots:
     footer:
