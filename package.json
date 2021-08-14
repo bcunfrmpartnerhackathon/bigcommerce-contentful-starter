@@ -55,6 +55,7 @@
     "use-intersection": "^0.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.15.0",
     "@types/classnames": "^2.3.1",
     "@types/cookie": "^0.4.0",
     "@types/node": "^16.0.1",
