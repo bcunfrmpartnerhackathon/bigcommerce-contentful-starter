@@ -19,8 +19,8 @@
     "pull:components": "uniform presentation component pull ./data/components",
     "pull:compositions": "uniform presentation composition pull ./data/compositions",
     "push": "run-p push:components push:compositions",
-    "push:components": "uniform presentation component push ./upm/definitions",
-    "push:compositions": "uniform presentation composition push ./upm/compositions"
+    "push:components": "uniform presentation component push ./data/components",
+    "push:compositions": "uniform presentation composition push ./data/compositions"
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^15.1.0",
